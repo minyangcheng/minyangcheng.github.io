@@ -1,0 +1,710 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="任何数据在互联网上传输，都是经过了物理层、数据链路层、网络层、传输层、会话层、表示层和应用层7层，那http和https就属于应用层协议。https是在http基础上发展而来，其主要在http协议下面加上了ssl层，解决http网络传输数据不安全的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入研究http和https">
+<meta property="og:url" content="http://yoursite.com/2016/11/05/深入研究http和https/index.html">
+<meta property="og:site_name" content="热土豆1号">
+<meta property="og:description" content="任何数据在互联网上传输，都是经过了物理层、数据链路层、网络层、传输层、会话层、表示层和应用层7层，那http和https就属于应用层协议。https是在http基础上发展而来，其主要在http协议下面加上了ssl层，解决http网络传输数据不安全的问题。">
+<meta property="og:image" content="http://yoursite.com/images/con_handshake.jpg">
+<meta property="og:image" content="http://yoursite.com/images/discon_handshake.jpg">
+<meta property="og:image" content="http://yoursite.com/images/http_tcpip.jpg">
+<meta property="og:image" content="http://yoursite.com/images/https_ssl_tcpip.jpg">
+<meta property="og:image" content="http://yoursite.com/images/https_process.png">
+<meta property="og:updated_time" content="2016-11-06T01:29:20.014Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入研究http和https">
+<meta name="twitter:description" content="任何数据在互联网上传输，都是经过了物理层、数据链路层、网络层、传输层、会话层、表示层和应用层7层，那http和https就属于应用层协议。https是在http基础上发展而来，其主要在http协议下面加上了ssl层，解决http网络传输数据不安全的问题。">
+<meta name="twitter:image" content="http://yoursite.com/images/con_handshake.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6346434820096132000',
+      author: '楼主大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/05/深入研究http和https/"/>
+
+
+
+
+
+  <title> 深入研究http和https | 热土豆1号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">热土豆1号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/05/深入研究http和https/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="minyangcheng">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="热土豆1号">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="热土豆1号" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                深入研究http和https
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-05T15:52:37+08:00">
+              2016-11-05
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2016-11-06T09:29:20+08:00">
+              2016-11-06
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>任何数据在互联网上传输，都是经过了物理层、数据链路层、网络层、传输层、会话层、表示层和应用层7层，那http和https就属于应用层协议。https是在http基础上发展而来，其主要在http协议下面加上了ssl层，解决http网络传输数据不安全的问题。<br><a id="more"></a></p>
+<h2 id="数据是如何在网络上传输的"><a href="#数据是如何在网络上传输的" class="headerlink" title="数据是如何在网络上传输的"></a>数据是如何在网络上传输的</h2><p>数据在网络上传输时是需要经过7层的，即：物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。我这里讨论的主要是传输层和应用层，其它层的作用请自行搜索。</p>
+<ol>
+<li>传输层主要解决数据如何在网络中传输，tcp/ip即为传输层协议。</li>
+<li>应用层主要解决如何包装数据和解包数据，http、https即为应用层协议。</li>
+</ol>
+<h3 id="tcp-ip"><a href="#tcp-ip" class="headerlink" title="tcp/ip"></a>tcp/ip</h3><ol>
+<li><p>三次握手建立连接</p>
+<ul>
+<li>client对server说，我想向你传输数据行不行？</li>
+<li>server对client说，我同意你向我传输数据，并且我也想向你传输数据行不行？</li>
+<li>client对server说，我也同意你向我传输数据。</li>
+</ul>
+</li>
+<li><p>四次握手关闭连接（由于tcp/ip是双工的，因此每个方向需要单独关闭）：</p>
+<ul>
+<li>client对server说，我的数据传输完毕了，我请求关闭由我向你发送数据这个方向的连接（client-&gt;server）。</li>
+<li>server对client说，我同意关闭连接（client-&gt;server）。</li>
+<li>server对client说，我的数据传输完毕，我请求关闭由我向你发送数据这个方向的连接（server-&gt;client）。</li>
+<li>client对server说，我同意关闭连接（server-&gt;client）。</li>
+</ul>
+</li>
+</ol>
+<p>下面用两张图说明建立连接和关闭连接过程：</p>
+<p><img src="/images/con_handshake.jpg" alt=""><br><img src="/images/discon_handshake.jpg" alt=""></p>
+<h3 id="http"><a href="#http" class="headerlink" title="http"></a>http</h3><blockquote>
+<p>HTTP：是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。</p>
+</blockquote>
+<h4 id="与tcp-ip传输协议关系："><a href="#与tcp-ip传输协议关系：" class="headerlink" title="与tcp/ip传输协议关系："></a>与tcp/ip传输协议关系：</h4><p><img src="/images/http_tcpip.jpg" alt=""></p>
+<h4 id="http协议特点："><a href="#http协议特点：" class="headerlink" title="http协议特点："></a>http协议特点：</h4><p>HTTP协议的主要特点可概括如下：</p>
+<ol>
+<li>支持客户/服务器模式。</li>
+<li>简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
+<li>灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</li>
+<li>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
+<li>无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</li>
+</ol>
+<h4 id="http协议："><a href="#http协议：" class="headerlink" title="http协议："></a>http协议：</h4><ol>
+<li>http url是一种特殊类型的URI，包含了用于查找某个资源的足够的信息。</li>
+<li>http请求包含请求行、消息报头、请求正文。</li>
+<li>http响应包含状态行、消息报头、响应正文。</li>
+</ol>
+<p><em>具体的协议内容和格式你可以通过Fiddler进行抓包查看，或者在chrome上按照postman插件查看。</em></p>
+<h3 id="https"><a href="#https" class="headerlink" title="https"></a>https</h3><blockquote>
+<p>HTTPS：是以安全为目标的HTTP通道，简单讲是HTTP的安全版，即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。</p>
+</blockquote>
+<h4 id="与ssl、tcp-ip传输协议关系："><a href="#与ssl、tcp-ip传输协议关系：" class="headerlink" title="与ssl、tcp/ip传输协议关系："></a>与ssl、tcp/ip传输协议关系：</h4><p><img src="/images/https_ssl_tcpip.jpg" alt=""></p>
+<h4 id="https协议特点"><a href="#https协议特点" class="headerlink" title="https协议特点"></a>https协议特点</h4><p>由于其实在http上建立的，因此拥有http的特点。此外，https传输数据也更为安全。</p>
+<h4 id="https协议"><a href="#https协议" class="headerlink" title="https协议"></a>https协议</h4><p>我们其实可以将https理解为http+ssl，其主要是在ssl层构建了一层加密通道，之后的数据在这个加密通道上传输。</p>
+<h4 id="让服务器支持https"><a href="#让服务器支持https" class="headerlink" title="让服务器支持https"></a>让服务器支持https</h4><p>如果要让你的服务器支持https，你需要向正规的CA机构申请证书，申请成功后会，会有公钥和私钥证书，然后在你的服务器进行证书配置证书。当client请求server数据时，server就会把公钥证书下发给client，client就去校验证书的合法性。</p>
+<h5 id="如何校验证书的合法性"><a href="#如何校验证书的合法性" class="headerlink" title="如何校验证书的合法性"></a>如何校验证书的合法性</h5><p>在server发送公钥证书给client的时候，发送的不是一个证书，而是一个证书链。客户端拿到证书链后，会从子代证书到根证书，向上开始查找是否有证书在客户端的证书集合中，如果有则信任。并且，一个证书的父代证书被信任了，其子代证书也会被自动信任。<br>android系统中一般会自带100多种证书，也就是说如果我们的证书是这些证书机构的子证书，那么我们的证书就会被自动信任。</p>
+<h5 id="构建加密通道的过程"><a href="#构建加密通道的过程" class="headerlink" title="构建加密通道的过程"></a>构建加密通道的过程</h5><p>先上一张图：<br><img src="/images/https_process.png" alt=""></p>
+<ol>
+<li>client将自己支持的加密算法、hash算法发送给server</li>
+<li>server从中选出一种加密算法和hash算法，并将公钥证书返回给client</li>
+<li>client接受到公钥证书，会首先校验证书的合法性，如果信任该证书，则会产生一个随机数字（作为之后通信过程中对称加密的秘钥），然后取出证书中的公钥，用公钥对这个随机数字进行加密，然后和hash结果一并返回给server。</li>
+<li>server接受到数据后，首先验证hash值的一致性，如果一致，则会取出私钥证书中的私钥，对这个随机数解密。然后再用解密后的随机数作为秘钥，加密一段数据，返回给client。</li>
+<li>client接受到数据，用这个随机数解密接受到的数据，如果成功则握手完成，接下来的数据传输都用这个随机数进行加密。</li>
+</ol>
+<h2 id="android如何https请求"><a href="#android如何https请求" class="headerlink" title="android如何https请求"></a>android如何https请求</h2><p>我目前用的是okhttp框架,如果使用HttpUrlConnection也是大致一样的处理。</p>
+<ol>
+<li><p>信任指定的证书</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> OkHttpClient.<span class="function">Builder <span class="title">setCertificates</span><span class="params">(OkHttpClient.Builder builder,InputStream[] certificates)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">            SSLContext sslContext = SSLContext.getInstance(<span class="string">"TLS"</span>);</div><div class="line">            <span class="comment">//certificate</span></div><div class="line">            CertificateFactory certificateFactory = CertificateFactory.getInstance(<span class="string">"X.509"</span>);</div><div class="line">            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());</div><div class="line">            keyStore.load(<span class="keyword">null</span>);</div><div class="line">            <span class="keyword">int</span> index = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span> (InputStream certificate : certificates)&#123;</div><div class="line">                String certificateAlias = Integer.toString(index++);</div><div class="line">                keyStore.setCertificateEntry(certificateAlias, certificateFactory.generateCertificate(certificate));</div><div class="line">                <span class="keyword">try</span>&#123;</div><div class="line">                    <span class="keyword">if</span> (certificate != <span class="keyword">null</span>) certificate.close();</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e)&#123;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());</div><div class="line">            trustManagerFactory.init(keyStore);</div><div class="line">            sslContext.init(<span class="keyword">null</span>, trustManagerFactory.getTrustManagers(), <span class="keyword">new</span> SecureRandom());</div><div class="line"></div><div class="line">            builder.sslSocketFactory(sslContext.getSocketFactory());</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> builder;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>信任所有证书（不推荐使用该方法）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UnSafeTrustManager</span> <span class="keyword">implements</span> <span class="title">X509TrustManager</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkClientTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span></span></div><div class="line">                <span class="keyword">throws</span> CertificateException</div><div class="line">        &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkServerTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span></span></div><div class="line">                <span class="keyword">throws</span> CertificateException</div><div class="line">        &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="keyword">public</span> X509Certificate[] getAcceptedIssuers()</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> X509Certificate[]&#123;&#125;;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> OkHttpClient.<span class="function">Builder <span class="title">setCertificates</span><span class="params">(OkHttpClient.Builder builder,InputStream[] certificates,InputStream bksFileStream, String password)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">            SSLContext sslContext = SSLContext.getInstance(<span class="string">"TLS"</span>);</div><div class="line"></div><div class="line">            sslContext.init(<span class="keyword">null</span>, <span class="keyword">new</span> TrustManager[]&#123;<span class="keyword">new</span> UnSafeTrustManager()&#125;, <span class="keyword">new</span> SecureRandom());</div><div class="line">            builder.sslSocketFactory(sslContext.getSocketFactory());</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> builder;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ol>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/48129405" target="_blank" rel="external">http://blog.csdn.net/lmj623565791/article/details/48129405</a></li>
+<li><a href="http://www.cnblogs.com/li0803/archive/2008/11/03/1324746.html" target="_blank" rel="external">http://www.cnblogs.com/li0803/archive/2008/11/03/1324746.html</a></li>
+<li><a href="http://blog.csdn.net/lintcgirl/article/details/52066875" target="_blank" rel="external">http://blog.csdn.net/lintcgirl/article/details/52066875</a></li>
+<li><a href="http://www.mahaixiang.cn/internet/1233.html" target="_blank" rel="external">http://www.mahaixiang.cn/internet/1233.html</a></li>
+<li><a href="https://www.douban.com/note/482351370/" target="_blank" rel="external">https://www.douban.com/note/482351370/</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/05/如何运用编译时注解/" rel="next" title="如何运用编译时注解">
+                <i class="fa fa-chevron-left"></i> 如何运用编译时注解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/13/使用jenkins搭建持续集成环境/" rel="prev" title="使用jenkins搭建持续集成环境">
+                使用jenkins搭建持续集成环境 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="minyangcheng" />
+          <p class="site-author-name" itemprop="name">minyangcheng</p>
+          <p class="site-description motion-element" itemprop="description">生活其实是一种状态，好坏全凭的是前期的准备和现场发挥！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minyangcheng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://lymuxh.github.io" title="穆小灰灰" target="_blank">穆小灰灰</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据是如何在网络上传输的"><span class="nav-number">1.</span> <span class="nav-text">数据是如何在网络上传输的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-ip"><span class="nav-number">1.1.</span> <span class="nav-text">tcp/ip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http"><span class="nav-number">1.2.</span> <span class="nav-text">http</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与tcp-ip传输协议关系："><span class="nav-number">1.2.1.</span> <span class="nav-text">与tcp/ip传输协议关系：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http协议特点："><span class="nav-number">1.2.2.</span> <span class="nav-text">http协议特点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http协议："><span class="nav-number">1.2.3.</span> <span class="nav-text">http协议：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https"><span class="nav-number">1.3.</span> <span class="nav-text">https</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与ssl、tcp-ip传输协议关系："><span class="nav-number">1.3.1.</span> <span class="nav-text">与ssl、tcp/ip传输协议关系：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#https协议特点"><span class="nav-number">1.3.2.</span> <span class="nav-text">https协议特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#https协议"><span class="nav-number">1.3.3.</span> <span class="nav-text">https协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#让服务器支持https"><span class="nav-number">1.3.4.</span> <span class="nav-text">让服务器支持https</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如何校验证书的合法性"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">如何校验证书的合法性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#构建加密通道的过程"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">构建加密通道的过程</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android如何https请求"><span class="nav-number">2.</span> <span class="nav-text">android如何https请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">2.0.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">minyangcheng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
