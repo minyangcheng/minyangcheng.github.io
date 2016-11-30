@@ -1,0 +1,654 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="项目中有一个功能让用户选择图片并上传服务器，在网上看了一些人写的工具类库，有点不符合自己的心意，于是自己写了一个调用系统相机或相册选择图片的工具类。
+
+源码地址 : https://github.com/minyangcheng/ImageWrapper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android调用系统相机和相册选择图片">
+<meta property="og:url" content="http://yoursite.com/2016/11/28/android调用系统相机和相册选择图片/index.html">
+<meta property="og:site_name" content="热土豆1号">
+<meta property="og:description" content="项目中有一个功能让用户选择图片并上传服务器，在网上看了一些人写的工具类库，有点不符合自己的心意，于是自己写了一个调用系统相机或相册选择图片的工具类。
+
+源码地址 : https://github.com/minyangcheng/ImageWrapper">
+<meta property="og:updated_time" content="2016-11-30T12:19:23.629Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android调用系统相机和相册选择图片">
+<meta name="twitter:description" content="项目中有一个功能让用户选择图片并上传服务器，在网上看了一些人写的工具类库，有点不符合自己的心意，于是自己写了一个调用系统相机或相册选择图片的工具类。
+
+源码地址 : https://github.com/minyangcheng/ImageWrapper">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6346434820096132000',
+      author: '楼主大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/28/android调用系统相机和相册选择图片/"/>
+
+
+
+
+
+  <title> android调用系统相机和相册选择图片 | 热土豆1号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">热土豆1号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/28/android调用系统相机和相册选择图片/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="minyangcheng">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="热土豆1号">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="热土豆1号" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                android调用系统相机和相册选择图片
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-28T21:26:21+08:00">
+              2016-11-28
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2016-11-30T20:19:23+08:00">
+              2016-11-30
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目中有一个功能让用户选择图片并上传服务器，在网上看了一些人写的工具类库，有点不符合自己的心意，于是自己写了一个调用系统相机或相册选择图片的工具类。</p>
+<blockquote>
+<p>源码地址 : <a href="https://github.com/minyangcheng/ImageWrapper" target="_blank" rel="external">https://github.com/minyangcheng/ImageWrapper</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><ol>
+<li>调用系统相机和相册的api，获取图片的路径。</li>
+<li>将获取的图片复制到自定义限制文件个数的缓存中，防止多次拍照后图片存放本地，增加app占用的硬盘空间。从而避免了在外部需要手动释放图片所占的硬盘空间。</li>
+</ol>
+<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><h3 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用?"></a>如何使用?</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@OnClick</span>(R.id.btn_select_image)</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">clickSelectImageIv</span><span class="params">()</span></span>&#123;</div><div class="line">    String[] items=&#123;<span class="string">"拍照"</span>,<span class="string">"图库"</span>&#125;;</div><div class="line">    AlertDialog.Builder builder=<span class="keyword">new</span> AlertDialog.Builder(<span class="keyword">this</span>)</div><div class="line">            .setTitle(<span class="string">"选择照片方式"</span>)</div><div class="line">            .setItems(items, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</div><div class="line">                    <span class="keyword">if</span>(which==<span class="number">0</span>)&#123;</div><div class="line">                        EasyImageSelector.getInstance(getActivity()).openCamera(getActivity());</div><div class="line">                    &#125;<span class="keyword">else</span>&#123;</div><div class="line">                        EasyImageSelector.getInstance(getActivity()).openGalleryPicker(getActivity());</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">    builder.show();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> AppCompatActivity <span class="title">getActivity</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onActivityResult(requestCode, resultCode, data);</div><div class="line">    EasyImageSelector.getInstance(getActivity()).handleActivityResult(requestCode, resultCode, data, <span class="keyword">this</span>, <span class="keyword">new</span> EasyImageSelector.Callbacks() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onImagePickerError</span><span class="params">(Exception e, EasyImageSelector.ImageSource source)</span> </span>&#123;</div><div class="line">            L.d(TAG, <span class="string">"onImagePickerError exception=%s"</span>, e);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onImagePicked</span><span class="params">(<span class="keyword">final</span> File imageFile, EasyImageSelector.ImageSource source)</span> </span>&#123;</div><div class="line">            L.d(TAG, <span class="string">"onImagePicked file=%s"</span>, imageFile.getAbsolutePath());</div><div class="line">            <span class="keyword">final</span> File outFile=EasyImageSelector.getInstance(getActivity()).getImageFile();</div><div class="line">            <span class="keyword">if</span>(ImageUtils.compressImageToFile(imageFile, outFile, <span class="number">500</span>, <span class="number">500</span>))&#123;</div><div class="line">                ImageLoaderWrap.displayFileImage(imageFile, mImageIv);</div><div class="line">                <span class="keyword">new</span> Thread()&#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                        mOriginalImageFile=imageFile;</div><div class="line">                        mCompressedImageFile=outFile;</div><div class="line">                        setExifInfoInImageFile(mCompressedImageFile);</div><div class="line"></div><div class="line">                        uploadImageFile(outFile);</div><div class="line">                    &#125;</div><div class="line">                &#125;.start();</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                onImagePickerError(<span class="keyword">new</span> Exception(<span class="string">"图片压缩失败"</span>),source);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="EasyImageSelector对外开放两个方法"><a href="#EasyImageSelector对外开放两个方法" class="headerlink" title="EasyImageSelector对外开放两个方法"></a>EasyImageSelector对外开放两个方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">openCamera</span><span class="params">(Object obj)</span> </span>&#123;</div><div class="line">    Intent intent = <span class="keyword">new</span> Intent(MediaStore.ACTION_IMAGE_CAPTURE);</div><div class="line">    File image = getImageFile();</div><div class="line">    Uri capturedImageUri = Uri.fromFile(image);</div><div class="line">    intent.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri);</div><div class="line">    mCameraImageUriStr = capturedImageUri.toString();</div><div class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> Activity) &#123;</div><div class="line">        Activity activity = (Activity) obj;</div><div class="line">        activity.startActivityForResult(intent, REQ_PICK_PICTURE_FROM_CAMERA);</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> Fragment)&#123;</div><div class="line">        Fragment fragment=(Fragment) obj;</div><div class="line">        fragment.startActivityForResult(intent, REQ_PICK_PICTURE_FROM_CAMERA);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">openGalleryPicker</span><span class="params">(Object obj)</span> </span>&#123;</div><div class="line">    Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_GET_CONTENT);</div><div class="line">    intent.setType(<span class="string">"image/*"</span>);</div><div class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> Activity) &#123;</div><div class="line">        Activity activity = (Activity) obj;</div><div class="line">        activity.startActivityForResult(intent, REQ_PICK_PICTURE_FROM_GALLERY);</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> Fragment)&#123;</div><div class="line">        Fragment fragment=(Fragment) obj;</div><div class="line">        fragment.startActivityForResult(intent, REQ_PICK_PICTURE_FROM_GALLERY);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="显示图片数量的缓存类"><a href="#显示图片数量的缓存类" class="headerlink" title="显示图片数量的缓存类"></a>显示图片数量的缓存类</h3><p>主要是利用文件的最后修改时间进行排序，如果文件数量到达上限，就删除掉修改时间最早的文件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AmountLimitCache</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> File mCacheDir;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mMaxAmount=<span class="number">100</span>;  <span class="comment">//默认支持100个文件</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AmountLimitCache</span><span class="params">(String cacheDir)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(TextUtils.isEmpty(cacheDir))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"cacheDir can not be null"</span>);</div><div class="line">        &#125;</div><div class="line">        mCacheDir=<span class="keyword">new</span> File(cacheDir);</div><div class="line">        <span class="keyword">if</span>(!mCacheDir.exists())&#123;</div><div class="line">            mCacheDir.mkdir();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">save</span><span class="params">(InputStream is , String fileName)</span></span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</div><div class="line">            deleteFilesWhenArriveMaxCount();</div><div class="line"></div><div class="line">            File file=getFile(fileName);</div><div class="line">            <span class="keyword">return</span> FileUtils.writeFile(file, is);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">save</span><span class="params">(File inFile , String fileName)</span></span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</div><div class="line">            deleteFilesWhenArriveMaxCount();</div><div class="line">            File file=getFile(fileName);</div><div class="line">            <span class="keyword">return</span> FileUtils.copyFile(inFile.getAbsolutePath(), file.getAbsolutePath());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(String fileName)</span></span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</div><div class="line">            File file=getFile(fileName);</div><div class="line">            <span class="keyword">if</span>(file.exists()&amp;&amp;file.getParentFile().getAbsolutePath().equals(mCacheDir.getAbsolutePath()))&#123;</div><div class="line">                file.delete();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</div><div class="line">            File[] files=mCacheDir.listFiles();</div><div class="line">            <span class="keyword">if</span>(files!=<span class="keyword">null</span>&amp;&amp;files.length&gt;<span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">for</span>(File file : files)&#123;</div><div class="line">                    file.delete();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCacheSize</span><span class="params">(<span class="keyword">int</span> maxAmount)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.mMaxAmount=maxAmount;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> File <span class="title">getFile</span><span class="params">(String fileName)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> File(mCacheDir,fileName);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> File[] getFiles()&#123;</div><div class="line">        <span class="keyword">return</span> mCacheDir.listFiles();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteFilesWhenArriveMaxCount</span><span class="params">()</span></span>&#123;</div><div class="line">        File[] files=mCacheDir.listFiles();</div><div class="line">        <span class="keyword">if</span>(files!=<span class="keyword">null</span>&amp;&amp;files.length&gt;=mMaxAmount)&#123;</div><div class="line">            Arrays.sort(files, <span class="keyword">new</span> FileComprator());</div><div class="line">            <span class="keyword">int</span> tempCnt=files.length-(mMaxAmount-<span class="number">1</span>);</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;tempCnt;i++)&#123;</div><div class="line">                files[i].delete();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FileComprator</span> <span class="keyword">implements</span> <span class="title">Comparator</span>&lt;<span class="title">File</span>&gt; </span>&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(File lhs, File rhs)</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (lhs.lastModified()-rhs.lastModified());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你的app对图片选择没有特别的要求，推荐直接使用调用系统相册或相机，不过这样做的话就不能很好的进行多图选择了，要想拥有多图选择功能还是需要你自定义图片选择器。我在下一篇文章将会介绍我写的自定义图片选择器。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/19/universal-image-loader源码分析/" rel="next" title="universal-image-loader源码分析">
+                <i class="fa fa-chevron-left"></i> universal-image-loader源码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/28/android自定义图片选择器/" rel="prev" title="android自定义图片选择器">
+                android自定义图片选择器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="minyangcheng" />
+          <p class="site-author-name" itemprop="name">minyangcheng</p>
+          <p class="site-description motion-element" itemprop="description">生活其实是一种状态，好坏全凭的是前期的准备和现场发挥！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minyangcheng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://lymuxh.github.io" title="穆小灰灰" target="_blank">穆小灰灰</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现思路"><span class="nav-number">1.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现代码"><span class="nav-number">2.</span> <span class="nav-text">实现代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用"><span class="nav-number">2.1.</span> <span class="nav-text">如何使用?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EasyImageSelector对外开放两个方法"><span class="nav-number">2.2.</span> <span class="nav-text">EasyImageSelector对外开放两个方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示图片数量的缓存类"><span class="nav-number">2.3.</span> <span class="nav-text">显示图片数量的缓存类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">minyangcheng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

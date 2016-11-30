@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="工具," />
 
 
 
@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://yoursite.com/images/jenkins_13.jpg">
 <meta property="og:image" content="http://yoursite.com/images/jenkins_14.jpg">
 <meta property="og:image" content="http://yoursite.com/images/jenkins_15.jpg">
-<meta property="og:updated_time" content="2016-11-28T13:13:44.791Z">
+<meta property="og:updated_time" content="2016-11-30T12:07:46.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用jenkins搭建持续集成环境">
 <meta name="twitter:description" content="jenkins是一个自动化引擎，它提供了许多插件，让你能够持续集成、自动化测试和持续交付。本文所讨论的是在window系统上搭建jenkins环境，并新建一个构建android apk文件的任务。">
@@ -301,8 +301,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2016-11-28T21:13:44+08:00">
-              2016-11-28
+            <time title="Post modified" itemprop="dateModified" datetime="2016-11-30T20:07:46+08:00">
+              2016-11-30
             </time>
             
           </span>
@@ -365,6 +365,8 @@
 </ol>
 <h2 id="用jenkins实现一个有趣的功能"><a href="#用jenkins实现一个有趣的功能" class="headerlink" title="用jenkins实现一个有趣的功能"></a>用jenkins实现一个有趣的功能</h2><p>想象一下：当bug修复完毕后，开发人员将代码上传到git或svn，然后告知测试人员，可以进行测试。测试人员知道后，便可以在jenkins上立即构建相应项目，当项目构建好后，又会以测试的电脑为节点，去给测试弹出一个窗口，让测试去选择需要安装刚刚编译好的apk包，并且直接给测试人员的测试手机安装。</p>
 <p>实现这样一个个其实用jenkins时非常简单的。主要的难点在与如何在节点机器上弹出命令行窗口。我的方法是：首先用java se写一个可供用户选择安装的命令界面，即为可运行的jar包，然后再jenkins中添加节点，并在节点上用bash命令行去执行这个jar包即可。</p>
+<p>在任务构建完毕后，在节点机器上执行的bash<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//启动jar包，在节点机器上打开命令行窗口</div><div class="line">start java -Xmx256m -Xms128m -jar F:\jenkins\workspace\apkRun.jar</div></pre></td></tr></table></figure></p>
+<p>可执行jar包内部的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.min;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.BufferedReader;</div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;</div><div class="line"><span class="keyword">import</span> java.util.HashMap;</div><div class="line"><span class="keyword">import</span> java.util.Iterator;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="comment">//执行语句:start /i java -jar C:\Users\cheguo\Desktop\ApkRun.jar</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">        	File apkDir=<span class="keyword">new</span> File(<span class="string">"F:\\jenkins\\workspace\\machine_install_tuoche\\app\\apks"</span>);</div><div class="line">    		<span class="keyword">if</span>(!apkDir.exists()||apkDir.listFiles().length==<span class="number">0</span>)&#123;</div><div class="line">    			System.out.println(<span class="string">"请现在jenkins平台上点击立即构建或构建出问题了"</span>);</div><div class="line">    			<span class="keyword">return</span> ;</div><div class="line">    		&#125;</div><div class="line">    		File[] apkFileArr=apkDir.listFiles();</div><div class="line">    		Map&lt;Integer,File&gt; fileMap=<span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;apkFileArr.length;i++)&#123;</div><div class="line">    			fileMap.put(i+<span class="number">1</span>, apkFileArr[i]);</div><div class="line">    		&#125;</div><div class="line">    		</div><div class="line">    		<span class="comment">//输出提示选项</span></div><div class="line">    		System.out.println(<span class="string">"===================输入选项==================="</span>);</div><div class="line">    		Iterator&lt;Integer&gt; iterator=fileMap.keySet().iterator();</div><div class="line">    		<span class="keyword">while</span>(iterator.hasNext())&#123;</div><div class="line">    			Integer key=iterator.next();</div><div class="line">    			File value=fileMap.get(key);</div><div class="line">    			System.out.println(value+<span class="string">"   &lt;----&gt;   "</span>+key);;</div><div class="line">    		&#125;</div><div class="line">        	</div><div class="line">            System.out.print(<span class="string">"请输入安装包后面的选项:"</span>);  </div><div class="line">            BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</div><div class="line">            String s=<span class="keyword">null</span>;</div><div class="line">            <span class="keyword">int</span> inputKey=-<span class="number">1</span>;</div><div class="line">            <span class="keyword">while</span>((s= br.readLine())!=<span class="keyword">null</span>)&#123;</div><div class="line">            	<span class="keyword">try</span> &#123;</div><div class="line">					inputKey=Integer.parseInt(s);</div><div class="line">				&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">				&#125;</div><div class="line">            	<span class="keyword">if</span>(fileMap.get(inputKey)!=<span class="keyword">null</span>)&#123;</div><div class="line">            		<span class="keyword">break</span>;</div><div class="line">            	&#125;<span class="keyword">else</span>&#123;</div><div class="line">            		System.out.println(<span class="string">"请输入争正确的选项值"</span>);</div><div class="line">            	&#125;</div><div class="line">            &#125;</div><div class="line">            File selectApkFile=fileMap.get(inputKey);</div><div class="line">            System.out.println(<span class="string">"您选择安装的包为:"</span>+selectApkFile.getName());</div><div class="line">            </div><div class="line">            System.out.println(<span class="string">"===========开始安装=================="</span>);</div><div class="line">            String cmdStr=<span class="string">"adb install -r "</span>+selectApkFile.getAbsolutePath();</div><div class="line">            Process process=Runtime.getRuntime().exec(cmdStr);</div><div class="line">            InputStream is=process.getInputStream();</div><div class="line">            BufferedReader infoReader=<span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(process.getInputStream()));</div><div class="line">            <span class="keyword">while</span>((s=infoReader.readLine())!=<span class="keyword">null</span>)&#123;</div><div class="line">            	System.out.println(<span class="string">"安装进度----"</span>+s);</div><div class="line">            &#125;</div><div class="line">            infoReader.close();</div><div class="line">            System.out.println(<span class="string">"安装完成"</span>);</div><div class="line">            </div><div class="line">            <span class="comment">//停住界面</span></div><div class="line">            System.out.println(<span class="string">"按q键退出"</span>);</div><div class="line">            br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</div><div class="line">            s=<span class="keyword">null</span>;</div><div class="line">            <span class="keyword">while</span>((s= br.readLine())!=<span class="keyword">null</span>)&#123;</div><div class="line">            	<span class="keyword">if</span>(s.equals(<span class="string">"q"</span>))&#123;</div><div class="line">            		<span class="keyword">break</span>;</div><div class="line">            	&#125;</div><div class="line">            &#125;</div><div class="line">            br.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -385,6 +387,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/工具/" rel="tag"># 工具</a>
+          
+        </div>
       
 
       
@@ -471,7 +479,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
