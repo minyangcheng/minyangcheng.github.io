@@ -1,0 +1,693 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vue front-end," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="为了让vue项目代码更好的组织和架构，我们在开发vue前端项目时，我们最好在开发工具和代码书写方式上遵循一些基本的约定。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue开发规约">
+<meta property="og:url" content="http://yoursite.com/2017/05/28/vue开发规约/index.html">
+<meta property="og:site_name" content="热土豆1号">
+<meta property="og:description" content="为了让vue项目代码更好的组织和架构，我们在开发vue前端项目时，我们最好在开发工具和代码书写方式上遵循一些基本的约定。">
+<meta property="og:updated_time" content="2017-05-29T05:01:23.272Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue开发规约">
+<meta name="twitter:description" content="为了让vue项目代码更好的组织和架构，我们在开发vue前端项目时，我们最好在开发工具和代码书写方式上遵循一些基本的约定。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6346434820096132000',
+      author: '楼主大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/28/vue开发规约/"/>
+
+
+
+
+
+  <title> vue开发规约 | 热土豆1号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">热土豆1号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/28/vue开发规约/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="minyangcheng">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="热土豆1号">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="热土豆1号" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vue开发规约
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-28T17:50:55+08:00">
+              2017-05-28
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2017-05-29T13:01:23+08:00">
+              2017-05-29
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>为了让vue项目代码更好的组织和架构，我们在开发vue前端项目时，我们最好在开发工具和代码书写方式上遵循一些基本的约定。</p>
+<a id="more"></a>
+<h3 id="开发工具约定"><a href="#开发工具约定" class="headerlink" title="开发工具约定"></a>开发工具约定</h3><ol>
+<li>使用IDE或Webstorm</li>
+<li>Vue.js单文件组件的高亮及语法支持<a href="http://blog.csdn.net/Dcatfly/article/details/53123318" target="_blank" rel="external">http://blog.csdn.net/Dcatfly/article/details/53123318</a></li>
+<li>统一代码缩进格式：<ul>
+<li>打开editor-code style-javascript，将tabsize、indent、continuation indet设置为2</li>
+<li>项目根目录中添加.editorconfig文件，配置代码格式<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">root = true</div><div class="line">[*]</div><div class="line">charset = utf-8</div><div class="line">indent_style = space</div><div class="line">indent_size = 2</div><div class="line">end_of_line = lf</div><div class="line">insert_final_newline = true</div><div class="line">trim_trailing_whitespace = true</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="js约定"><a href="#js约定" class="headerlink" title="js约定"></a>js约定</h3><ol>
+<li>变量名和方法名采用驼峰命名法，尽量让命名具有识别性。</li>
+<li>保持代码干净，不必要的字段和方法记得删除</li>
+<li>尽量采用箭头表达式，去除掉<code>let that=this</code>之类的代码，箭头表达式可以根据上下文自动关联到外部的this对象</li>
+<li>一个方法内的代码，尽量不要超过30行</li>
+<li>同一段代码有两三处都使用了，一定要去抽取出来</li>
+<li>js变量申明采用const或let，避免使用var</li>
+</ol>
+<h3 id="css约定"><a href="#css约定" class="headerlink" title="css约定"></a>css约定</h3><ol>
+<li>书写顺序　　<ul>
+<li>位置属性(position, top, right, z-index,display, float等)　　</li>
+<li>大小(width, height, padding, margin)　　</li>
+<li>文字系列(font, line-height, letter-spacing,color- text-align等)　　</li>
+<li>背景(background, border等)　　</li>
+<li>其他(animation, transition等)</li>
+</ul>
+</li>
+<li>如果设置的css属于只有两三个可采用内联样式（style），否则采用css类添加样式</li>
+<li>css类命名一律小写，连词时用中槓（nav-image)，尽量不缩写，除非一看就明白的单词</li>
+<li>公共样式单独写入公共文件中，后期可用less做变量或者混合使用</li>
+</ol>
+<h3 id="html约定"><a href="#html约定" class="headerlink" title="html约定"></a>html约定</h3><ol>
+<li>vue绑定属性v-bind:请简写成:(v-bind:class–&gt;:class)</li>
+<li>vue绑定时间v-on:请简写成@(v-on:click–&gt;@click)</li>
+<li>当vue组件的文件名为InfoAuthItem，在vue2.x版本中可以直接使用，不需要转换成小写<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;InfoAuthItem title=&quot;金融认证&quot;</div><div class="line">                  content=&quot;提供个人客户消费贷、车商信用贷等金融服务&quot;</div><div class="line">                  :image=&quot;authFinance&quot; @clickAuth=&quot;clickFinanceAuth&quot; :status=&quot;financeAuthStatus&quot;/&gt;</div><div class="line">&lt;Divider/&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="其他约定"><a href="#其他约定" class="headerlink" title="其他约定"></a>其他约定</h3><ol>
+<li>如果一个效果或样式，会出现两次及以上请将其封装成组件</li>
+<li>如果一个组件属于属于某一种业务特有的，请将其放入该业务包中的components中</li>
+<li>所有vue组件文件命名采用PascalCase（InfoAuthPage.vue），页面级别的组件以Page结尾（InfoAuthPage.vue）</li>
+<li>确保代码能够在chrome上调试</li>
+<li>Store中只存放公共数据（即该页面数据的生命周期不会随着页面destory而消亡），另外这些数据可采用module化进行管理，具体参考<a href="https://vuex.vuejs.org/zh-cn/modules.html" target="_blank" rel="external">vuex如何实现模块</a></li>
+<li>文件命名：<ul>
+<li>vue组件文件命名采用PascalCase（如InfoAuthItem);其它js文件采用camelCase(commonUtil)</li>
+<li>css或less独立文件命名采用小写，连词时用中槓</li>
+<li>图片等其它资源文件采用采用小写，连词时用中槓</li>
+</ul>
+</li>
+</ol>
+<h4 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">   ├── README.md                       项目介绍</div><div class="line">   ├── index.html                      入口页面</div><div class="line">   ├── build                           构建脚本目录</div><div class="line">   │   ├── build-server.js                 运行本地构建服务器，可以访问构建后的页面</div><div class="line">   │   ├── build.js                        生产环境构建脚本</div><div class="line">   │   ├── dev-client.js                   开发服务器热重载脚本，主要用来实现开发阶段的页面自动刷新</div><div class="line">   │   ├── dev-server.js                   运行本地开发服务器</div><div class="line">   │   ├── utils.js                        构建相关工具方法</div><div class="line">   │   ├── webpack.base.conf.js            wabpack基础配置</div><div class="line">   │   ├── webpack.dev.conf.js             wabpack开发环境配置</div><div class="line">   │   └── webpack.prod.conf.js            wabpack生产环境配置</div><div class="line">   ├── config                              项目配置</div><div class="line">   │   ├── dev.env.js                      开发环境变量</div><div class="line">   │   ├── index.js                        项目配置文件</div><div class="line">   │   ├── prod.env.js                     生产环境变量</div><div class="line">   │   └── test.env.js                     测试环境变量</div><div class="line">   ├── mock                            mock数据目录</div><div class="line">   │   └── hello.js</div><div class="line">   ├── package.json                    npm包配置文件，里面定义了项目的npm脚本，依赖包等信息</div><div class="line">   ├── src                             源码目录    </div><div class="line">   │   ├── main.js                         入口js文件</div><div class="line">   │   ├── app.vue                         根组件</div><div class="line">   │   ├── components                      公共组件目录</div><div class="line">   │   │   └── title.vue</div><div class="line">   │   ├── assets                          资源目录，这里的资源会被wabpack构建</div><div class="line">   │   │   ├── img</div><div class="line">   │   │   │   └── logo.png</div><div class="line">│	│	└── css                          css文件目录 </div><div class="line">   │   │       ├── common.less</div><div class="line">│	│		└── normalize.less</div><div class="line">│	├── utils                            工具类</div><div class="line">│	├── mixins                           混合类</div><div class="line">│	├── net                              网络相关</div><div class="line">│	├── plugins                          自定义插件</div><div class="line">│	│</div><div class="line">   │   ├── routes                          前端路由</div><div class="line">   │   │   └── index.js</div><div class="line">   │   ├── store                           应用级数据（state）</div><div class="line">   │   │   ├── index.js                    整个应用级别数据</div><div class="line">│	│	└── modules                     子模块数据</div><div class="line">│	│		└── home.js</div><div class="line">   │   └── views                           页面目录</div><div class="line">   │       ├── auth                        认证业务</div><div class="line">│		│	├── components              与认证业务相关联的特有组件</div><div class="line">│		│	│	└── InfoAuthItem.vue</div><div class="line">│		│	└── InfoAuthPage.vue	    认证状态列表页面</div><div class="line">   │       └── notfound.vue                路由找不到时，跳转的页面</div><div class="line">   ├── static                          纯静态资源，不会被wabpack构建。</div></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="http://www.tuicool.com/articles/za6rMfY" target="_blank" rel="external">http://www.tuicool.com/articles/za6rMfY</a></li>
+<li><a href="https://www.zhihu.com/question/19586885" target="_blank" rel="external">https://www.zhihu.com/question/19586885</a></li>
+<li><a href="http://blog.csdn.net/Dcatfly/article/details/53123318" target="_blank" rel="external">http://blog.csdn.net/Dcatfly/article/details/53123318</a></li>
+<li><a href="https://vuex.vuejs.org/zh-cn/modules.html" target="_blank" rel="external">https://vuex.vuejs.org/zh-cn/modules.html</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-front-end/" rel="tag"># vue front-end</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/14/自定义vue-lite-popup组件/" rel="next" title="自定义vue-lite-popup组件">
+                <i class="fa fa-chevron-left"></i> 自定义vue-lite-popup组件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="minyangcheng" />
+          <p class="site-author-name" itemprop="name">minyangcheng</p>
+          <p class="site-description motion-element" itemprop="description">生活其实是一种状态，好坏全凭的是前期的准备和现场发挥！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minyangcheng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://lymuxh.github.io" title="穆小灰灰" target="_blank">穆小灰灰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zyfzyfhaha.github.io" title="峰哥" target="_blank">峰哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#开发工具约定"><span class="nav-number">1.</span> <span class="nav-text">开发工具约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js约定"><span class="nav-number">2.</span> <span class="nav-text">js约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css约定"><span class="nav-number">3.</span> <span class="nav-text">css约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html约定"><span class="nav-number">4.</span> <span class="nav-text">html约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他约定"><span class="nav-number">5.</span> <span class="nav-text">其他约定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#目录结构"><span class="nav-number">5.1.</span> <span class="nav-text">目录结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">minyangcheng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
