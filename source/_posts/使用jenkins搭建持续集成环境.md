@@ -1,7 +1,7 @@
 ---
 title: 使用jenkins搭建持续集成环境
 date: 2016-11-13 12:21:08
-tags: 工具
+tags: tool
 ---
 jenkins是一个自动化引擎，它提供了许多插件，让你能够持续集成、自动化测试和持续交付。本文所讨论的是在window系统上搭建jenkins环境，并新建一个构建android apk文件的任务。
 

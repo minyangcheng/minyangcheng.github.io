@@ -1,7 +1,7 @@
 ---
 title: 移动端app开发技术方案选择
 date: 2017-05-06 11:02:21
-tags: android front-end
+tags: android
 ---
 目前移动端app开发大体的技术方案有：
 1. 纯原生

@@ -1,7 +1,7 @@
 ---
 title: vue开发规约
 date: 2017-05-28 17:50:55
-tags: vue front-end
+tags: front-end
 ---
 为了让vue项目代码更好的组织和架构，我们在开发vue前端项目时，我们最好在开发工具和代码书写方式上遵循一些基本的约定。
 

@@ -1,7 +1,7 @@
 ---
 title: window和linux命令操作
-date: 2016-11-30 20:08:21
-tags: android
+date: 2016-11-12 20:08:21
+tags: tool
 ---
 在弄jenkins给测试机器自动化安装打包好的apk包，学习了下window和linux命令操作，猛然发现其实很多操作都可以通过脚本实现。
 
@@ -80,6 +80,16 @@ pause
 ```bash
 man ps  //查看命令用法
 
+cd /opt  //目录跳转
+
+tar xzvf soft.tar.gz  //解压
+
+mv soft soft_1  //重命名
+
+cp soft dir  //复制
+
+rm -rf soft_dir  //删除
+
 ps aux | grep tomcat //查看tomcat进程
 
 kill -9 7010  //杀进程
@@ -94,5 +104,3 @@ echo $JAVA_HOME //查看JAVA_HOME环境变量
 
 locate tomcat//搜索tomcat
 ```
-
-*定期更新*
