@@ -5,7 +5,7 @@ tags: android
 ---
 当需要用户选择图片的时候，可以调用系统相机或相册。如果需要用户进行多图选择就需要自定义图片选择器。这里介绍我自己封装的图片选择器。
 
->源码地址 : <https://github.com/minyangcheng/ImageWrapper>
+>源码地址 : <https://github.com/minyangcheng/ImageSelector>
 
 <!-- more -->
 
