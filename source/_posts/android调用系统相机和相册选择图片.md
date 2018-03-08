@@ -5,7 +5,7 @@ tags: android
 ---
 项目中有一个功能让用户选择图片并上传服务器，在网上看了一些人写的工具类库，有点不符合自己的心意，于是自己写了一个调用系统相机或相册选择图片的工具类。
 
->源码地址 : <https://github.com/minyangcheng/ImageWrapper>
+>源码地址 : <https://github.com/minyangcheng/ImageSelector>
 
 <!-- more -->
 
