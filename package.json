@@ -2,6 +2,12 @@
   "name": "hexo-site",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "preview": "hexo clean & hexo g & hexo server",
+    "deploy": "hexo deploy",
+    "push":"git add . & git commit -m 'add files from cmd' & git push",
+    "test":"hexo -v"
+  },
   "hexo": {
     "version": "3.6.0"
   },
