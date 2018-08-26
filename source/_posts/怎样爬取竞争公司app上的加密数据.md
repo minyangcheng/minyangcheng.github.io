@@ -113,7 +113,7 @@ public class i<T> implements d<ae, T> {
 
 该模块主要是为了hook掉指定的方法，进行数据采集，并且采集的数据会在记录在文件里面，以便上传服务器分析。具体xposed的使用请自行查看官方文档。
 
-1. 定义一个基类，统一处理mutil-dex hook
+* 定义一个基类，统一处理mutil-dex hook
 
 ```
 /**
@@ -178,8 +178,7 @@ public abstract class BaseHook implements IXposedHookLoadPackage {
 
 }
 ```
-
-2. 定义具体应用的hook
+* 定义具体应用的hook
 
 ```
 /**
@@ -214,7 +213,7 @@ public class ××××CheHook extends BaseHook {
 }
 ```
 
-3. 收集数据到本地文件
+* 收集数据到本地文件
 
    ```
    public class FileLogger {
@@ -658,6 +657,7 @@ app(devicesIp, '../shell/auto_shengxinbao.sh');
 1. 其实通过xposed hook应用可以做很多事情，比如有些人通过它修改一些收费应用商的金币数量等等，让自己可以使用收费版功能。
 2. 在通过自动化爬取数据的时候很容易被封号，这个就需要你为你的自动化脚本指定一些执行策略，比如执行多少次后，换一个账户、换imei、换地址位置、换ip地址
 3. 通过该方案爬取数据的好处是，你不需要真正的区破解接口的加密逻辑。如果你确实有这方面的需求可以通过xposed上的InspectPackage模块来对应用进行动态分析，在结合源码进行破解，所需要花费的时间也是比较多。
+4. 以后还是少熬夜的比较好！
 
 
 
