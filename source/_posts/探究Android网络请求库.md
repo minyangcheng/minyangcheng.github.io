@@ -3,7 +3,7 @@ title: 探究Android网络请求库
 date: 2017-08-31 12:45:09
 tags: android
 ---
-android网络请求从最初的手写HttpUrlConnection，到谷歌开源的Volley框架，再到Square开源的Retrofit框架，使得现在开发中请求网络数据越来越简单，代码也变得越来越简洁。
+android网络请求从最初的手写HttpUrlConnection或httpclient,到使用Volley、async-httpclient、retrofit框架，使得在开发中请求网络数据操作变得越来越简单，代码也变得越来越简洁。这里我会主要分析两个具有代表性的开源库volley和retrofit实现机制，然后谈谈如何在Volley基本上封装一个简单的类Retrofit请求库。
 
 <!-- more -->
 
@@ -212,7 +212,7 @@ Retrofit主要是通过包装OkHttp来实现数据请求的，内部通过java�
   }
 ```
 
-### 在Volley基本上封装一个简单的Retrofit
+### 在Volley基本上封装一个简单的类Retrofit请求库
 
 公司的项目之前用的是Volley，并且自定义了一个Request，可以让接口定义在实体对象中，但是这样做在项目后期出现了大量的请求实体对象。考虑到之前的用的是Volley，所以自己在volley基础上，写了一个带有基本功能的Retrofit。
 
