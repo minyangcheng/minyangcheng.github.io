@@ -1,0 +1,691 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="最近公司产品有个需求，获取竞争公司的app应用上一些数据。当时听了后也有点蒙逼，要知道现在的app都是混淆并且加固过了的，而且数据接口都进行过加密处理的，这样就给爬取数据增加了一些难度。思考了一段时间，想出来本文的解决方案。此方案难点在于需要对app进行脱壳处理，寻找需要hook的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎样爬取竞争公司app上的加密数据">
+<meta property="og:url" content="http://yoursite.com/2018/08/18/怎样爬取竞争公司app上的加密数据/index.html">
+<meta property="og:site_name" content="热土豆1号">
+<meta property="og:description" content="最近公司产品有个需求，获取竞争公司的app应用上一些数据。当时听了后也有点蒙逼，要知道现在的app都是混淆并且加固过了的，而且数据接口都进行过加密处理的，这样就给爬取数据增加了一些难度。思考了一段时间，想出来本文的解决方案。此方案难点在于需要对app进行脱壳处理，寻找需要hook的方法。">
+<meta property="og:updated_time" content="2018-12-16T07:39:52.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="怎样爬取竞争公司app上的加密数据">
+<meta name="twitter:description" content="最近公司产品有个需求，获取竞争公司的app应用上一些数据。当时听了后也有点蒙逼，要知道现在的app都是混淆并且加固过了的，而且数据接口都进行过加密处理的，这样就给爬取数据增加了一些难度。思考了一段时间，想出来本文的解决方案。此方案难点在于需要对app进行脱壳处理，寻找需要hook的方法。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6346434820096132000',
+      author: '楼主大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/18/怎样爬取竞争公司app上的加密数据/"/>
+
+
+
+
+
+  <title> 怎样爬取竞争公司app上的加密数据 | 热土豆1号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">热土豆1号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/18/怎样爬取竞争公司app上的加密数据/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="minyangcheng">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="热土豆1号">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="热土豆1号" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                怎样爬取竞争公司app上的加密数据
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-18T17:07:09+08:00">
+              2018-08-18
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2018-12-16T15:39:52+08:00">
+              2018-12-16
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近公司产品有个需求，获取竞争公司的app应用上一些数据。当时听了后也有点蒙逼，要知道现在的app都是混淆并且加固过了的，而且数据接口都进行过加密处理的，这样就给爬取数据增加了一些难度。思考了一段时间，想出来本文的解决方案。此方案难点在于需要对app进行脱壳处理，寻找需要hook的方法。</p>
+<a id="more"></a>
+<h3 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h3><ol>
+<li>app加固原理和一些常用的脱壳技术</li>
+<li>xposed框架使用</li>
+<li>android中各种网络请求框架的数据返回处理点</li>
+<li>ui automator自动化技术</li>
+<li>android应用开发基础</li>
+<li>node开发基础</li>
+<li>adb命令用法</li>
+</ol>
+<h3 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h3><h4 id="对加固过app进行脱壳处理"><a href="#对加固过app进行脱壳处理" class="headerlink" title="对加固过app进行脱壳处理"></a>对加固过app进行脱壳处理</h4><p>市面上的app大多数app都是用360、腾讯等其他厂商的免费加固，面对这些app的脱壳，有很多方法如ZjDroid、DexHunter、dex2oat法。</p>
+<p>我这里采用的是dex2oat法，这种方式对360加固方式脱壳成功率挺高的，其原理：android系统art模式下，apk文件首次打开时后会用dex2oat生成oat时，这个时候内存中的DEX是完整的，所以只需要在这个时候将dex保存下来就ok了。看雪上有个大牛专门采用这种方法做了一个android4.4版本脱壳系统镜像，我们只需要在android虚拟机上安装镜像，修改系统启动模式为ART，重启机器，安装apk，打开后就会自动脱可。</p>
+<p>以下是脱壳过程中产生的日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">07-27 02:19:10.532 3484-3484/? I/dex2oat: dex2oat: /data/dalvik-cache/system@app@Exchange2.apk@classes.dex</div><div class="line">07-27 02:19:11.652 3484-3484/? I/dex2oat: harvey:dex file name--&gt;/system/app/Exchange2.apk</div><div class="line">07-27 02:19:23.712 3484-3484/? W/dex2oat: Verification of void com.google.common.net.TldPatterns.&lt;clinit&gt;() took 1.576255482s</div><div class="line">07-27 02:26:48.362 3545-3545/? I/dex2oat: dex2oat: /data/dalvik-cache/system@priv-app@DefaultContainerService.apk@classes.dex</div><div class="line">07-27 02:26:48.452 3545-3545/? I/dex2oat: harvey:dex file name--&gt;/system/priv-app/DefaultContainerService.apk</div><div class="line">07-27 02:26:54.422 3547-3547/? I/dex2oat: dex2oat: /data/dalvik-cache/data@app@***8@classes.dex</div><div class="line">07-27 02:26:54.872 3547-3547/? I/dex2oat: harvey:dex file name--&gt;/data/app/****-1.apk</div><div class="line">07-27 02:26:56.592 3565-3565/? I/dex2oat: dex2oat: /data/dalvik-cache/system@app@Gallery2.apk@classes.dex</div><div class="line">07-27 02:26:57.232 3565-3565/? I/dex2oat: harvey:dex file name--&gt;/system/app/Gallery2.apk</div><div class="line">07-27 02:27:22.152 3592-3592/? I/dex2oat: dex2oat: /data/dalvik-cache/system@app@PicoTts.apk@classes.dex</div><div class="line">07-27 02:27:22.282 3592-3592/? I/dex2oat: harvey:dex file name--&gt;/system/app/PicoTts.apk</div><div class="line">07-27 02:34:00.692 3677-3677/? I/dex2oat: dex2oat: /data/data/****/code_cache/rocoo-dexes/rocoo.dex</div><div class="line">07-27 02:34:00.752 3677-3677/? I/dex2oat: harvey:dex file name--&gt;/data/data/****/files/hotfix/rocoo.dex</div><div class="line">07-27 02:34:05.572 3688-3688/? I/dex2oat: dex2oat: /data/data/****/.jiagu/classes.oat</div><div class="line">07-27 02:34:16.912 3688-3688/? I/dex2oat: harvey:dex file name--&gt;/data/data/****/.jiagu/classes.dex</div><div class="line">07-27 02:34:17.112 3688-3688/? I/dex2oat: harvey:write tartget dex file successfull-&gt;&gt;/data/data/****/.jiagu/classes.dex_8238736.dex</div><div class="line">07-27 02:34:17.112 3688-3688/? I/dex2oat: harvey:dex file name--&gt;/data/data/****/.jiagu/classes2.dex</div><div class="line">07-27 02:34:17.112 3688-3688/? I/dex2oat: harvey:write tartget dex file successfull-&gt;&gt;/data/data/****/.jiagu/classes2.dex_138268.dex</div><div class="line">07-27 02:34:17.122 3688-3688/? I/dex2oat: harvey:dex file name--&gt;/data/data/****/.jiagu/classes3.dex</div><div class="line">07-27 02:34:17.122 3688-3688/? I/dex2oat: harvey:write tartget dex file successfull-&gt;&gt;/data/data/****/.jiagu/classes3.dex_214904.dex</div></pre></td></tr></table></figure>
+<h4 id="在代码中寻找请求数据返回的hook点"><a href="#在代码中寻找请求数据返回的hook点" class="headerlink" title="在代码中寻找请求数据返回的hook点"></a>在代码中寻找请求数据返回的hook点</h4><p>通过查看apk的mainifest文件，获取包名，用jadx打开脱壳后的classes.dex文件，通过包名寻找到代码，我们这里是为了寻找接口数据的hook点，所以我一般会先去寻找登录界面的代码，然后通过登录界面找出接口调用涉及到的那些类，在通过这些类判断出该app用的是哪个数据请求框架，常见的也就几种：volley、retrofit+okhttp、xutil、asynchttpclient等。找到app用的是哪个请求框架后，我们就可以推断出具体需要hook的位置了。</p>
+<p>例如：我发现app用的是retrofit，那就可以推断出它会使用<code>Converter&lt;ResponseBody, T&gt;</code>对返回的结果进行json反序列化处理，因此找到了以下类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">import com.google.gson.f;</div><div class="line">import com.google.gson.s;</div><div class="line">import java.io.BufferedReader;</div><div class="line">import java.io.Reader;</div><div class="line">import java.io.StringReader;</div><div class="line">import okhttp3.ae;</div><div class="line">import retrofit2.d;</div><div class="line"></div><div class="line">/* compiled from: RsaGsonResponseBodyConverter */</div><div class="line">public class i&lt;T&gt; implements d&lt;ae, T&gt; &#123;</div><div class="line">    private final f a;</div><div class="line">    private final s&lt;T&gt; b;</div><div class="line"></div><div class="line">    public /* synthetic */ Object b(Object obj) &#123;</div><div class="line">        return a((ae) obj);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    i(f fVar, s&lt;T&gt; sVar) &#123;</div><div class="line">        this.a = fVar;</div><div class="line">        this.b = sVar;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public T a(ae aeVar) &#123;</div><div class="line">        String a = a(aeVar.f());</div><div class="line">        if (a.endsWith(&quot;\r\n&quot;)) &#123;</div><div class="line">            a = a.replace(&quot;\r\n&quot;, &quot;&quot;);</div><div class="line">        &#125;</div><div class="line">        try &#123;</div><div class="line">            T b = this.b.b(this.a.a(new StringReader(a)));</div><div class="line">            return b;</div><div class="line">        &#125; finally &#123;</div><div class="line">            aeVar.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private String a(Reader reader) &#123;</div><div class="line">        BufferedReader bufferedReader = new BufferedReader(reader);</div><div class="line">        StringBuilder stringBuilder = new StringBuilder();</div><div class="line">        while (true) &#123;</div><div class="line">            String readLine = bufferedReader.readLine();</div><div class="line">            if (readLine != null) &#123;</div><div class="line">                stringBuilder.append(readLine);</div><div class="line">                stringBuilder.append(&quot;\r\n&quot;);</div><div class="line">            &#125; else &#123;</div><div class="line">                bufferedReader.close();</div><div class="line">                return stringBuilder.toString();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="书写xposed模块"><a href="#书写xposed模块" class="headerlink" title="书写xposed模块"></a>书写xposed模块</h4><p>该模块主要是为了hook掉指定的方法，进行数据采集，并且采集的数据会在记录在文件里面，以便上传服务器分析。具体xposed的使用请自行查看官方文档。</p>
+<ul>
+<li>定义一个基类，统一处理mutil-dex hook</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by minych on 18-7-24.</div><div class="line"> */</div><div class="line"></div><div class="line">public abstract class BaseHook implements IXposedHookLoadPackage &#123;</div><div class="line"></div><div class="line">    protected static final String TAG = &quot;ZEOK&quot;;</div><div class="line"></div><div class="line">    public String packageName;</div><div class="line">    public String hookClassName;</div><div class="line"></div><div class="line">    public BaseHook(String packageName, String hookClassName) &#123;</div><div class="line">        if (TextUtils.isEmpty(packageName) || TextUtils.isEmpty(hookClassName)) &#123;</div><div class="line">            throw new IllegalArgumentException();</div><div class="line">        &#125;</div><div class="line">        this.packageName = packageName;</div><div class="line">        this.hookClassName = hookClassName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable &#123;</div><div class="line">        if (loadPackageParam.packageName.equalsIgnoreCase(packageName)) &#123;</div><div class="line">            XposedHelpers.findAndHookMethod(Application.class, &quot;attach&quot;, Context.class, new XC_MethodHook() &#123;</div><div class="line">                @Override</div><div class="line">                protected void afterHookedMethod(MethodHookParam param) throws Throwable &#123;</div><div class="line">                    xLog(packageName, &quot;加载成功&quot;);</div><div class="line">                    ClassLoader classLoader = ((Context) param.args[0]).getClassLoader();</div><div class="line">                    Class&lt;?&gt; hookClass = null;</div><div class="line">                    try &#123;</div><div class="line">                        hookClass = classLoader.loadClass(hookClassName);</div><div class="line">                        handleLoadPackage(hookClass);</div><div class="line">                    &#125; catch (Exception e) &#123;</div><div class="line">                        Logger.e(TAG, e);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void xLog(String tag, Object object) &#123;</div><div class="line">        if (tag == null || object == null) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        XposedBridge.log(tag + &quot; : &quot; + object.toString());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getCurrentActivityName() &#123;</div><div class="line">        try &#123;</div><div class="line">            ActivityManager manager = (ActivityManager) AndroidAppHelper.currentApplication().getSystemService(Context.ACTIVITY_SERVICE);</div><div class="line">            ActivityManager.RunningTaskInfo info = manager.getRunningTasks(1).get(0);</div><div class="line">            String shortClassName = info.topActivity.getClassName();</div><div class="line">            return shortClassName;</div><div class="line">        &#125; catch (SecurityException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return &quot;&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public abstract void handleLoadPackage(Class clazz) throws Exception;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>定义具体应用的hook</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by minych on 18-7-24.</div><div class="line"> */</div><div class="line"></div><div class="line">public class ××××CheHook extends BaseHook &#123;</div><div class="line"></div><div class="line">    public MaiHaoCheHook() &#123;</div><div class="line">        super(&quot;****&quot;, &quot;××××.service.b.i&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void handleLoadPackage(Class clazz) &#123;</div><div class="line">        XposedHelpers.findAndHookMethod(clazz, &quot;a&quot;, Reader.class, new XC_MethodHook() &#123;</div><div class="line">            @Override</div><div class="line">            protected void afterHookedMethod(MethodHookParam param) throws Throwable &#123;</div><div class="line">                Object resultObj = param.getResult();</div><div class="line">                if (resultObj != null) &#123;</div><div class="line">                    JSONObject jsonObject = new JSONObject();</div><div class="line">                    jsonObject.put(&quot;packageName&quot;, packageName);</div><div class="line">                    jsonObject.put(&quot;activityName&quot;, getCurrentActivityName());</div><div class="line">                    jsonObject.put(&quot;responseData&quot;, resultObj.toString());</div><div class="line">                    String content = jsonObject.toString();</div><div class="line">                    Logger.d(TAG, content + &quot;\n\n&quot;);</div><div class="line">                    FileLogger.log(content);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>收集数据到本地文件</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public class FileLogger &#123;</div><div class="line"></div><div class="line">    private static final String TAG = &quot;HookLogger&quot;;</div><div class="line">    private static final String LOG_DIR = &quot;hookLogs&quot;;</div><div class="line">    private static final long MAX_SIZE = 10 * 1024 * 1024;</div><div class="line"></div><div class="line">    public static void log(String content) &#123;</div><div class="line">        if (TextUtils.isEmpty(content)) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        content = content + &quot;\n&quot;;</div><div class="line">        try &#123;</div><div class="line">            File logFile = getOutputFile();</div><div class="line">            FileOutputStream fileOutputStream = new FileOutputStream(logFile, true);</div><div class="line">            fileOutputStream.write(content.getBytes());</div><div class="line">            fileOutputStream.flush();</div><div class="line">            fileOutputStream.close();</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            Logger.e(TAG, e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static File getOutputFile() throws Exception &#123;</div><div class="line">        File hookLogDir = getLogDir();</div><div class="line">        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</div><div class="line">        String today = simpleDateFormat.format(Calendar.getInstance().getTime());</div><div class="line">        File file = new File(hookLogDir, today + &quot;.log&quot;);</div><div class="line">        long fileSize = file.length();</div><div class="line">        if (file.exists() &amp;&amp; fileSize &gt; MAX_SIZE) &#123;</div><div class="line">            String indicator = getIndicatorStr();</div><div class="line">            File renameFile = new File(hookLogDir, today + &quot;-&quot; + indicator + &quot;.log&quot;);</div><div class="line">            file.renameTo(renameFile);</div><div class="line">        &#125;</div><div class="line">        return file;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static File[] scanCompleteFile() throws Exception &#123;</div><div class="line">        File dir = getLogDir();</div><div class="line">        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</div><div class="line">        String today = simpleDateFormat.format(new Date());</div><div class="line">        File[] fileArr = dir.listFiles(new FilenameFilter() &#123;</div><div class="line">            @Override</div><div class="line">            public boolean accept(File dir, String name) &#123;</div><div class="line">                return !(today + &quot;.log&quot;).equals(name);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        if (fileArr != null &amp;&amp; fileArr.length &gt; 0) &#123;</div><div class="line">            Arrays.sort(fileArr, new Comparator&lt;File&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public int compare(File o1, File o2) &#123;</div><div class="line">                    return o1.getName().compareTo(o2.getName());</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        return fileArr;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static File getLogDir() &#123;</div><div class="line">        File file = new File(Environment.getExternalStorageDirectory(), LOG_DIR);</div><div class="line">        if (!file.exists()) &#123;</div><div class="line">            file.mkdirs();</div><div class="line">        &#125;</div><div class="line">        return file;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static String getIndicatorStr() &#123;</div><div class="line">        return System.currentTimeMillis() + &quot;&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="书写定期上传日志文件服务"><a href="#书写定期上传日志文件服务" class="headerlink" title="书写定期上传日志文件服务"></a>书写定期上传日志文件服务</h4><p>定义一个前台服务，定期上传xposed模块收集完成的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by minych on 18-7-28.</div><div class="line"> */</div><div class="line"></div><div class="line">public class UploadHookHttpResponseService extends Service &#123;</div><div class="line"></div><div class="line">    private static final String TAG = &quot;UploadHookHttpResponseService&quot;;</div><div class="line">    private boolean exitFlag;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onCreate() &#123;</div><div class="line">        super.onCreate();</div><div class="line">        foreground();</div><div class="line">        exitFlag = false;</div><div class="line">        startThread();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int onStartCommand(@Nullable Intent intent, int flags, int startId) &#123;</div><div class="line">        return START_STICKY;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    @Nullable</div><div class="line">    public IBinder onBind(Intent intent) &#123;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onDestroy() &#123;</div><div class="line">        exitFlag = true;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void foreground() &#123;</div><div class="line">        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);</div><div class="line">        Intent intent = new Intent(this, MainActivity.class);</div><div class="line">        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);</div><div class="line">        builder.setContentIntent(pIntent).</div><div class="line">                setContentTitle(&quot;上传爬虫数据服务&quot;)</div><div class="line">                .setContentText(&quot;正在运行中.....&quot;)</div><div class="line">                .setSmallIcon(R.mipmap.ic_launcher)</div><div class="line">                .setAutoCancel(false);</div><div class="line">        startForeground(1314, builder.build());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void startThread() &#123;</div><div class="line">        new Thread() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                uploadFiles();</div><div class="line">            &#125;</div><div class="line">        &#125;.start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void uploadFiles() &#123;</div><div class="line">        while (true) &#123;</div><div class="line">            if (exitFlag) &#123;</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">            try &#123;</div><div class="line">                try &#123;</div><div class="line">                    File[] files = FileLogger.scanCompleteFile();</div><div class="line">                    if (files != null &amp;&amp; files.length &gt; 0) &#123;</div><div class="line">                        File file = null;</div><div class="line">                        for (int i = 0; i &lt; files.length; i++) &#123;</div><div class="line">                            file = files[i];</div><div class="line">                            Logger.d(TAG, &quot;start upload file &quot; + file.getAbsolutePath());</div><div class="line">                            RequestBody fileBody = RequestBody.create(MediaType.parse(&quot;application/octet-stream&quot;), file);</div><div class="line">                            RequestBody requestBody = new MultipartBody.Builder()</div><div class="line">                                    .setType(MultipartBody.FORM)</div><div class="line">                                    .addFormDataPart(&quot;file&quot;, file.getName(), fileBody)</div><div class="line">                                    .build();</div><div class="line"></div><div class="line">                            Request request = new Request.Builder()</div><div class="line">                                    .url(BuildConfig.API_SERVER_URL + &quot;/uploadLog&quot;)</div><div class="line">                                    .post(requestBody)</div><div class="line">                                    .build();</div><div class="line">                            Response response = OkHttpUtil.getOkHttpClient().newCall(request).execute();</div><div class="line">                            Logger.d(TAG, &quot;end upload file &quot; + file.getAbsolutePath() + &quot; responseCode=&quot; + response.code());</div><div class="line">                            if (response.code() == 200) &#123;</div><div class="line">                                String responseBody = response.body().string();</div><div class="line">                                if (&quot;success&quot;.equals(responseBody)) &#123;</div><div class="line">                                    saveUploadSuccRecord(file);</div><div class="line">                                    file.delete();</div><div class="line">                                &#125;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125; catch (Exception e) &#123;</div><div class="line">                    Logger.e(TAG, e);</div><div class="line">                &#125;</div><div class="line">                Thread.sleep(15 * 60 * 1000);</div><div class="line">            &#125; catch (Exception e) &#123;</div><div class="line">                Logger.e(TAG, e);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void saveUploadSuccRecord(File file) &#123;</div><div class="line">        String str = PreferencesUtils.getString(this, &quot;succUploadFiles&quot;);</div><div class="line">        List&lt;String&gt; succUploadList = null;</div><div class="line">        if (TextUtils.isEmpty(str)) &#123;</div><div class="line">            succUploadList = new ArrayList&lt;&gt;();</div><div class="line">        &#125; else &#123;</div><div class="line">            succUploadList = GsonUtil.getGson().fromJson(str, new TypeToken&lt;ArrayList&lt;String&gt;&gt;() &#123;</div><div class="line">            &#125;.getType());</div><div class="line">        &#125;</div><div class="line">        succUploadList.add(file.getAbsolutePath());</div><div class="line">        PreferencesUtils.putString(this, &quot;succUploadFiles&quot;, GsonUtil.toJson(succUploadList));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="自动化脚本"><a href="#自动化脚本" class="headerlink" title="自动化脚本"></a>自动化脚本</h4><p>上面的步骤做完了后，我们就可以就可以进行数据采集啦。但是通过人工手动点击操作app来收集数据的化，肯定是很傻的操作。因此需要通过android自动化框架ui automator来进行自动化操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div></pre></td><td class="code"><pre><div class="line">@RunWith(AndroidJUnit4.class)</div><div class="line">public class NiuNiuQiCheTest &#123;</div><div class="line"></div><div class="line">    private static final String PACKAGE_NAME = &quot;****&quot;;</div><div class="line"></div><div class="line">    private UiDevice mDevice;</div><div class="line"></div><div class="line">    @Before</div><div class="line">    public void before() throws Exception &#123;</div><div class="line">        mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());</div><div class="line">        Utils.wakeUpDevice(mDevice);</div><div class="line"></div><div class="line">        mDevice.pressHome();</div><div class="line">        sleep(3000);</div><div class="line"></div><div class="line">        while (!mDevice.hasObject(By.pkg(PACKAGE_NAME))) &#123;</div><div class="line">            Utils.openApp(PACKAGE_NAME);</div><div class="line">            sleep(10000);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void auto() throws Exception &#123;</div><div class="line">        startUp();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void startUp() throws Exception &#123;</div><div class="line">        sleep(4000);</div><div class="line">        Utils.click(mDevice, By.text(&quot;国产&quot;));</div><div class="line">        sleep(2000);</div><div class="line">        firstListView();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void firstListView() throws Exception &#123;</div><div class="line">        int width = mDevice.getDisplayWidth();</div><div class="line">        int height = mDevice.getDisplayHeight();</div><div class="line">        mDevice.swipe(width / 2, (int) (height * 0.75), width / 2, 0, 100);</div><div class="line"></div><div class="line">        int index = SharedPreferenceUtil.getInt(PACKAGE_NAME);</div><div class="line">        for (int i = 0; i &lt; index; i++) &#123;</div><div class="line">            if (!Utils.findObject(mDevice, By.res(&quot;****:id/****&quot;))</div><div class="line">                    .scroll(Direction.DOWN, 0.8f)) &#123;</div><div class="line">                sleep(500);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (mDevice.hasObject(By.text(&quot;中兴&quot;))) &#123;</div><div class="line">            SharedPreferenceUtil.putInt(PACKAGE_NAME, 0);</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        List&lt;String&gt; identificationStrList = new ArrayList&lt;&gt;();</div><div class="line">        String identificationStr = null;</div><div class="line">        List&lt;UiObject2&gt; uiObj2List = null;</div><div class="line">        boolean arriveEndFlag = false;</div><div class="line"></div><div class="line">        while (true) &#123;</div><div class="line">            sleep(2000);</div><div class="line">            UiObject2 itemObj = null;</div><div class="line">            uiObj2List = mDevice.findObjects(By.res(&quot;****:id/tv_content&quot;));</div><div class="line">            for (int i = 0; i &lt; uiObj2List.size(); i++) &#123;</div><div class="line">                try &#123;</div><div class="line">                    itemObj = uiObj2List.get(i);</div><div class="line">                    identificationStr = itemObj.getText();</div><div class="line">                    if (!identificationStrList.contains(identificationStr)) &#123;</div><div class="line">                        identificationStrList.add(identificationStr);</div><div class="line">                        itemObj.click();</div><div class="line">                        sleep(2000);</div><div class="line">                        secondListView();</div><div class="line">                    &#125;</div><div class="line">                &#125; catch (Exception e) &#123;</div><div class="line">                    L.e(e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if (arriveEndFlag) &#123;</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if (!Utils.findObject(mDevice, By.res(&quot;****:id/country_lvcountry&quot;))</div><div class="line">                    .scroll(Direction.DOWN, 0.8f)) &#123;</div><div class="line">                arriveEndFlag = true;</div><div class="line">            &#125;</div><div class="line">            SharedPreferenceUtil.putInt(PACKAGE_NAME, ++index);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void secondListView() throws Exception &#123;</div><div class="line">        if (!mDevice.hasObject(By.textContains(&quot;暂无&quot;))) &#123;</div><div class="line">            List&lt;String&gt; identificationStrList = new ArrayList&lt;&gt;();</div><div class="line">            String identificationStr = null;</div><div class="line">            List&lt;UiObject2&gt; uiObj2List = null;</div><div class="line">            boolean arriveEndFlag = false;</div><div class="line">            while (true) &#123;</div><div class="line">                uiObj2List = mDevice.findObjects(By.res(&quot;****:id/sbl_title&quot;));</div><div class="line">                for (UiObject2 childUiObj2 : uiObj2List) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        identificationStr = childUiObj2.getText();</div><div class="line">                        if (!identificationStrList.contains(identificationStr)) &#123;</div><div class="line">                            identificationStrList.add(identificationStr);</div><div class="line">                            L.d(identificationStr);</div><div class="line">                            childUiObj2.click();</div><div class="line">                            sleep(2000);</div><div class="line">                            thirdListView();</div><div class="line">                        &#125;</div><div class="line">                    &#125; catch (Exception e) &#123;</div><div class="line">                        L.e(e);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                if (arriveEndFlag) &#123;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                if (!Utils.findObject(mDevice, By.res(&quot;****:id/sub_list&quot;))</div><div class="line">                        .scroll(Direction.DOWN, 0.8f)) &#123;</div><div class="line">                    arriveEndFlag = true;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        mDevice.pressBack();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void thirdListView() throws Exception &#123;</div><div class="line">        if (!mDevice.hasObject(By.textContains(&quot;沒有&quot;)) || !mDevice.hasObject(By.textContains(&quot;暂无&quot;))) &#123;</div><div class="line">            List&lt;String&gt; identificationStrList = new ArrayList&lt;&gt;();</div><div class="line">            String identificationStr = null;</div><div class="line">            List&lt;UiObject2&gt; uiObj2List = null;</div><div class="line">            boolean arriveEndFlag = false;</div><div class="line">            while (true) &#123;</div><div class="line">                uiObj2List = mDevice.findObjects(By.res(&quot;****:id/res_user_name_area&quot;));</div><div class="line">                for (UiObject2 childUiObj2 : uiObj2List) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        sleep(1000 * 60 * 5);</div><div class="line"></div><div class="line">                        identificationStr = childUiObj2.getText();</div><div class="line">                        if (!identificationStrList.contains(identificationStr)) &#123;</div><div class="line">                            identificationStrList.add(identificationStr);</div><div class="line">                            childUiObj2.click();</div><div class="line">                            sleep(2000);</div><div class="line"></div><div class="line">                            Utils.click(mDevice, By.text(&quot;联系&quot;));</div><div class="line">                            sleep(1000);</div><div class="line">                            Utils.click(mDevice, By.res(&quot;****:id/txt_cancel&quot;));</div><div class="line">                            sleep(1000);</div><div class="line"></div><div class="line">                            while (!mDevice.hasObject(By.res(&quot;****:id/tab_title&quot;))) &#123;</div><div class="line">                                mDevice.pressBack();</div><div class="line">                                sleep(1000);</div><div class="line">                            &#125;</div><div class="line">                            sleep(3000);</div><div class="line">                        &#125;</div><div class="line">                    &#125; catch (InterruptedException e) &#123;</div><div class="line">                        L.e(e);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                if (arriveEndFlag) &#123;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                if (!Utils.findObject(mDevice, By.res(&quot;android:id/list&quot;))</div><div class="line">                        .scroll(Direction.DOWN, 0.8f)) &#123;</div><div class="line">                    arriveEndFlag = true;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        mDevice.pressBack();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @After</div><div class="line">    public void after() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="自动化脚本定期执行"><a href="#自动化脚本定期执行" class="headerlink" title="自动化脚本定期执行"></a>自动化脚本定期执行</h4><p>自动化脚本的运行其实就是执行脚本apk文件的过程，因此只需要将打包好的脚本apk文件，放在服务器定时执行即可。<br>这里说下我的实现思路：</p>
+<ol>
+<li>通过<code>adb connect</code>命令让android手机和服务器链接在一起</li>
+<li>nodejs写一个定时执行任务，将打包好的脚本apk文件定期在android手机运行即可</li>
+<li>通过pm2运行node执行文件，当定时任务挂掉后重启定时任务</li>
+<li>记录执行过程中导致自动化挂掉的问题日志</li>
+</ol>
+<p>我把在android手机执行测试脚本的过程写成一个shell脚本,然后通过shelljs去不断执行脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">adb connect &#123;ip&#125;</div><div class="line"></div><div class="line">adb -s &#123;ip&#125; shell am force-stop ****</div><div class="line"></div><div class="line">sleep 10s</div><div class="line"></div><div class="line">adb -s &#123;ip&#125; push ./shell/app-hook-debug-androidTest.apk /data/local/tmp/com.min.zeok.hook.test</div><div class="line"></div><div class="line">adb -s &#123;ip&#125; shell pm install -t -r &quot;/data/local/tmp/com.min.zeok.hook.test&quot;</div><div class="line"></div><div class="line">adb -s &#123;ip&#125; shell am instrument -w -r   -e debug false -e class com.min.zeok.test.**** com.min.zeok.hook.test/android.support.test.runner.AndroidJUnitRunner</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">const shell = require(&apos;shelljs&apos;);</div><div class="line">const fs = require(&apos;fs&apos;);</div><div class="line">const path = require(&apos;path&apos;);</div><div class="line">const moment = require(&apos;moment&apos;);</div><div class="line"></div><div class="line">let logDir = path.resolve(__dirname, &apos;../logs&apos;);</div><div class="line">if (!fs.existsSync(logDir)) &#123;</div><div class="line">  fs.mkdirSync(logDir);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function log(devicesIp, data) &#123;</div><div class="line">  data = data + &apos;\n&apos;;</div><div class="line">  fs.writeFileSync(path.resolve(__dirname, &apos;../logs&apos;, devicesIp + &apos;.log&apos;), data, &#123;flag: &apos;a&apos;&#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">module.exports = function (devicesIp, filePath) &#123;</div><div class="line">  const autoStrTemplete = fs.readFileSync(path.resolve(__dirname, filePath)).toString();</div><div class="line">  let scriptShell = autoStrTemplete.replace(/&#123;ip&#125;/g, devicesIp);</div><div class="line"></div><div class="line">  while (true) &#123;</div><div class="line">    log(devicesIp, &apos;----------------------&gt;&apos; + devicesIp + &apos;启动,&apos; + moment().format(&apos;YYYY-MM-DD HH:mm&apos;));</div><div class="line">    let result = shell.exec(scriptShell);</div><div class="line">    log(devicesIp, result.toString());</div><div class="line">    log(devicesIp, &apos;&lt;---------------------&apos; + devicesIp + &apos;退出,code=&apos; + result.code + &apos;   &apos; + moment().format(&apos;YYYY-MM-DD HH:mm&apos;));</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">const app = require(&apos;./app&apos;);</div><div class="line">const devicesIp = &apos;10.10.12.185:5555&apos;;</div><div class="line"></div><div class="line">app(devicesIp, &apos;../shell/auto_shengxinbao.sh&apos;);</div></pre></td></tr></table></figure>
+<h3 id="闲扯几句"><a href="#闲扯几句" class="headerlink" title="闲扯几句"></a>闲扯几句</h3><ol>
+<li>其实通过xposed hook应用可以做很多事情，比如有些人通过它修改一些收费应用商的金币数量等等，让自己可以使用收费版功能。</li>
+<li>在通过自动化爬取数据的时候很容易被封号，这个就需要你为你的自动化脚本指定一些执行策略，比如执行多少次后，换一个账户、换imei、换地址位置、换ip地址</li>
+<li>通过该方案爬取数据的好处是，你不需要真正的区破解接口的加密逻辑。如果你确实有这方面的需求可以通过xposed上的InspectPackage模块来对应用进行动态分析，在结合源码进行破解，所需要花费的时间也是比较多。</li>
+<li>以后还是少熬夜的比较好！</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/22/Weex开发工程化框架 fit-we/" rel="next" title="Weex开发工程化框架 fit-we">
+                <i class="fa fa-chevron-left"></i> Weex开发工程化框架 fit-we
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/26/Vue无埋点数据采集/" rel="prev" title="Vue无埋点数据采集">
+                Vue无埋点数据采集 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="minyangcheng" />
+          <p class="site-author-name" itemprop="name">minyangcheng</p>
+          <p class="site-description motion-element" itemprop="description">生活其实是一种状态，好坏全凭的是前期的准备和现场发挥！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minyangcheng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://lymuxh.github.io" title="穆小灰灰" target="_blank">穆小灰灰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zyfzyfhaha.github.io" title="峰哥" target="_blank">峰哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#技术点"><span class="nav-number">1.</span> <span class="nav-text">技术点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现步骤"><span class="nav-number">2.</span> <span class="nav-text">实现步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对加固过app进行脱壳处理"><span class="nav-number">2.1.</span> <span class="nav-text">对加固过app进行脱壳处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在代码中寻找请求数据返回的hook点"><span class="nav-number">2.2.</span> <span class="nav-text">在代码中寻找请求数据返回的hook点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#书写xposed模块"><span class="nav-number">2.3.</span> <span class="nav-text">书写xposed模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#书写定期上传日志文件服务"><span class="nav-number">2.4.</span> <span class="nav-text">书写定期上传日志文件服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动化脚本"><span class="nav-number">2.5.</span> <span class="nav-text">自动化脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动化脚本定期执行"><span class="nav-number">2.6.</span> <span class="nav-text">自动化脚本定期执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闲扯几句"><span class="nav-number">3.</span> <span class="nav-text">闲扯几句</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">minyangcheng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

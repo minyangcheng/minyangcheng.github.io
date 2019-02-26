@@ -1,0 +1,707 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="随着app不断迭代，业务越多，每个业务代码也越来越复杂，采用传统单一机构模式，势必会影响开发和测试效率，很不方便进行多人并行开发和测试。于是对公司的项目也在不断迭代中，进行组件化重构。
+
+源码地址 : https://github.com/minyangcheng/android-modularization">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android组件化开发">
+<meta property="og:url" content="http://yoursite.com/2017/10/17/android组件化开发/index.html">
+<meta property="og:site_name" content="热土豆1号">
+<meta property="og:description" content="随着app不断迭代，业务越多，每个业务代码也越来越复杂，采用传统单一机构模式，势必会影响开发和测试效率，很不方便进行多人并行开发和测试。于是对公司的项目也在不断迭代中，进行组件化重构。
+
+源码地址 : https://github.com/minyangcheng/android-modularization">
+<meta property="og:image" content="http://yoursite.com/images/arc_1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/arc_2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/arc_3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/arc_5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/arc_6.jpg">
+<meta property="og:image" content="http://yoursite.com/images/arc_7.jpg">
+<meta property="og:updated_time" content="2018-12-16T07:39:52.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android组件化开发">
+<meta name="twitter:description" content="随着app不断迭代，业务越多，每个业务代码也越来越复杂，采用传统单一机构模式，势必会影响开发和测试效率，很不方便进行多人并行开发和测试。于是对公司的项目也在不断迭代中，进行组件化重构。
+
+源码地址 : https://github.com/minyangcheng/android-modularization">
+<meta name="twitter:image" content="http://yoursite.com/images/arc_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6346434820096132000',
+      author: '楼主大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/17/android组件化开发/"/>
+
+
+
+
+
+  <title> android组件化开发 | 热土豆1号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">热土豆1号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/17/android组件化开发/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="minyangcheng">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="热土豆1号">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="热土豆1号" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                android组件化开发
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-17T21:26:54+08:00">
+              2017-10-17
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2018-12-16T15:39:52+08:00">
+              2018-12-16
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>随着app不断迭代，业务越多，每个业务代码也越来越复杂，采用传统单一机构模式，势必会影响开发和测试效率，很不方便进行多人并行开发和测试。于是对公司的项目也在不断迭代中，进行组件化重构。</p>
+<blockquote>
+<p>源码地址 : <a href="https://github.com/minyangcheng/android-modularization" target="_blank" rel="external">https://github.com/minyangcheng/android-modularization</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="单一模式（架构1-0-0）"><a href="#单一模式（架构1-0-0）" class="headerlink" title="单一模式（架构1.0.0）"></a>单一模式（架构1.0.0）</h2><h3 id="简单说明（如图）"><a href="#简单说明（如图）" class="headerlink" title="简单说明（如图）"></a>简单说明（如图）</h3><ol>
+<li>项目代码整体上分成两层，公共代码放在common、umeng、ocrlibrary，业务类代码放在app内。</li>
+<li>app module内部采用的是mvc模式，ui部分按照业务进行分包</li>
+</ol>
+<p><img src="/images/arc_1.jpg" alt=""></p>
+<p><img src="/images/arc_2.jpg" alt=""></p>
+<h3 id="痛点"><a href="#痛点" class="headerlink" title="痛点"></a>痛点</h3><ol>
+<li>团队间分模块并行开发越来越复杂，测试往往也不能够进行特定模块单独测试</li>
+<li>app moudle随着业务的增长越来越大，项目文件不易分类查找</li>
+<li>编译时间长</li>
+<li>代码复用性差，假设C端需要做一个和B端的一样业务模块，就需要需要一步一步粘贴拷贝代码</li>
+</ol>
+<h2 id="组件化模式（架构2-0-0）"><a href="#组件化模式（架构2-0-0）" class="headerlink" title="组件化模式（架构2.0.0）"></a>组件化模式（架构2.0.0）</h2><h3 id="简单说明（如图）-1"><a href="#简单说明（如图）-1" class="headerlink" title="简单说明（如图）"></a>简单说明（如图）</h3><ol>
+<li>项目代码整体上分成三层，主要采用组件化思想，每一层中的module是一个单一功能的组件，以后需要啥功能只需要引用该功能的library，bottom和middle层上的module可以在不同的项目中复用</li>
+<li>top层的module内部采用的是mvp模式,该层的moudle都可以单独开发测试，并打包成apk</li>
+<li>bottom层的CoreModel主要用于统一封装该层其他组件，提供一些开源库更加简洁用法，其它两层可直接依赖CoreModel</li>
+</ol>
+<p><img src="/images/arc_3.jpg" alt=""></p>
+<h3 id="top-module"><a href="#top-module" class="headerlink" title="top module"></a>top module</h3><ol>
+<li>top层的module主要采用mvp模式，业务代码转移到presenter，数据来源统一到DataManger中</li>
+<li>简单的页面逻辑，可以省略掉presenter层，直接在view层使用DataManger</li>
+</ol>
+<p><img src="/images/arc_5.jpg" alt=""></p>
+<h3 id="top-module-communication"><a href="#top-module-communication" class="headerlink" title="top module communication"></a>top module communication</h3><p>top层module之间的交互，采用 <a href="https://github.com/drakeet/Floo" target="_blank" rel="external">路由router</a></p>
+<p><img src="/images/arc_6.jpg" alt=""></p>
+<h2 id="hybird开发模式"><a href="#hybird开发模式" class="headerlink" title="hybird开发模式"></a>hybird开发模式</h2><p>项目中很多业务可以直接用H5方式直接书写。</p>
+<ol>
+<li>通过预先定义的bridge协议方法通信</li>
+<li>原生和h5之间页面跳转通过 <a href="https://github.com/drakeet/Floo" target="_blank" rel="external">路由router</a>，h5之间页面跳转通过<a href="https://router.vuejs.org/zh-cn/" target="_blank" rel="external">vue-router</a></li>
+<li>页面上的点击位，全部可以在服务器直接配成路由链接的方式，当用户点击是直接用路由做跳转。如果当线上的包所跳转的原生界面出现了紧急bug，我们就可以直接把路由路径切换成H5页面，这样就可以不用发包升级啦</li>
+<li>考虑到vue页面会再第一次加载的时候可能比较慢，我们可以直接在首页打开的时候，开启一个一像素页面进行预加载。</li>
+</ol>
+<p><img src="/images/arc_7.jpg" alt=""></p>
+<h3 id="代码控制"><a href="#代码控制" class="headerlink" title="代码控制"></a>代码控制</h3><p>在gradle打包apk的时候，我添加了一个依赖任务<code>preBuild.dependsOn &#39;checkstyle&#39;, &#39;findbugs&#39;, &#39;pmd&#39;</code>，使得每次打包都先运行代码格式检测和bug检查任务，如果通过才能进行打包，这样强制保证了项目代码的格式的统一。</p>
+<h4 id="强制代码格式检测"><a href="#强制代码格式检测" class="headerlink" title="强制代码格式检测"></a>强制代码格式检测</h4><p>采用checksyle进行java代码检测。</p>
+<blockquote>
+<p>CheckStyle是SourceForge下的一个项目，提供了一个帮助JAVA开发人员遵守某些编码规范的工具。它能够自动化代码规范检查过程，从而使得开发人员从这项重要但是枯燥的任务中解脱出来。</p>
+</blockquote>
+<h4 id="静态代码bug检查"><a href="#静态代码bug检查" class="headerlink" title="静态代码bug检查"></a>静态代码bug检查</h4><p>采用findbugs和pmd进行java静态bug检测。</p>
+<blockquote>
+<p>Findbugs是一个在java程序中查找bug的程序，它查找bug模式的实例，也就是可能出错的代码实例，注意Findbugs是检查java字节码，也就是*.class文件。<br>  其实准确的说，它是寻找代码缺陷的，很多我们写的不好的地方，可以优化的地方，它都能检查出来。例如：未关闭的数据库连接，缺少必要的null check，多余的 null check，多余的if后置条件，相同的条件分支，重复的代码块，错误的使用了”==”，建议使用StringBuffer代替字符串连加等等。而且我们还可以自己配置检查规则(做哪些检查,不做哪些检查)，也可以自己来实现独有的校验规则(用户自定义特定的bug模式需要继承它的接口,编写自己的校验类,属于高级技巧)。</p>
+<p>PMD是一种开源分析Java代码错误的工具。与其他分析工具不同的是，PMD通过静态分析获知代码错误。也就是说，在不运行Java程序的情况下报告错误。PMD附带了许多可以直接使用的规则，利用这些规则可以找出Java源程序的许多问题，例如：潜在的bug：空的try/catch/finally/switch语句；未使用的代码：未使用的局部变量、参数、私有方法等；可选的代码：String/StringBuffer的滥用；复杂的表达式：不必须的if语句、可以使用while循环完成的for循环；重复的代码：拷贝/粘贴代码意味着拷贝/粘贴bugs； 循环体创建新对象：尽量不要再for或while循环体内实例化一个新对象；资源关闭：Connect，Result，Statement等使用之后确保关闭掉</p>
+</blockquote>
+<h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><ol>
+<li>apk包瘦身：去除无用代码和文件，混淆等</li>
+<li>公共页面和widget控件优化，使其具有通用性</li>
+<li>抽出代码，构建出bottom层中的module</li>
+<li>抽出代码，构建出middle层中的module</li>
+<li>抽出代码，构建出top层中的module</li>
+<li>替换部分原生页面为H5，逐渐大规模采用H5页面开发</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/11/sping boot 自动化mock接口/" rel="next" title="sping boot 自动化mock接口">
+                <i class="fa fa-chevron-left"></i> sping boot 自动化mock接口
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/01/financial_plan_2018/" rel="prev" title="我的2018理财计划">
+                我的2018理财计划 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="minyangcheng" />
+          <p class="site-author-name" itemprop="name">minyangcheng</p>
+          <p class="site-description motion-element" itemprop="description">生活其实是一种状态，好坏全凭的是前期的准备和现场发挥！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minyangcheng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://lymuxh.github.io" title="穆小灰灰" target="_blank">穆小灰灰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zyfzyfhaha.github.io" title="峰哥" target="_blank">峰哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单一模式（架构1-0-0）"><span class="nav-number">1.</span> <span class="nav-text">单一模式（架构1.0.0）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单说明（如图）"><span class="nav-number">1.1.</span> <span class="nav-text">简单说明（如图）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#痛点"><span class="nav-number">1.2.</span> <span class="nav-text">痛点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件化模式（架构2-0-0）"><span class="nav-number">2.</span> <span class="nav-text">组件化模式（架构2.0.0）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单说明（如图）-1"><span class="nav-number">2.1.</span> <span class="nav-text">简单说明（如图）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top-module"><span class="nav-number">2.2.</span> <span class="nav-text">top module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top-module-communication"><span class="nav-number">2.3.</span> <span class="nav-text">top module communication</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hybird开发模式"><span class="nav-number">3.</span> <span class="nav-text">hybird开发模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码控制"><span class="nav-number">3.1.</span> <span class="nav-text">代码控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强制代码格式检测"><span class="nav-number">3.1.1.</span> <span class="nav-text">强制代码格式检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态代码bug检查"><span class="nav-number">3.1.2.</span> <span class="nav-text">静态代码bug检查</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构"><span class="nav-number">4.</span> <span class="nav-text">重构</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">minyangcheng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

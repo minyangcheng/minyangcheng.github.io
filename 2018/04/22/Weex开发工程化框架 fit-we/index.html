@@ -1,0 +1,711 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="fit-we是一套weex开发工程化框架，无侵入且扩展性强，可以让你轻松使用weex开发移动项目。框架中内置了一些必要的通用模块，如路由跳转、数据存储、事件通知等等，统一定义了模块书写和调用方式，对外也提供一套扩展模块功能接口。采用多页开发的形式，用webpack进行打包，将生成的文件并入zip包中，让渲染容器从本地快速加载js文件，当然你也可以选择从远程服务器加载js文件。
+
+源码地址 : ht">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Weex开发工程化框架 fit-we">
+<meta property="og:url" content="http://yoursite.com/2018/04/22/Weex开发工程化框架 fit-we/index.html">
+<meta property="og:site_name" content="热土豆1号">
+<meta property="og:description" content="fit-we是一套weex开发工程化框架，无侵入且扩展性强，可以让你轻松使用weex开发移动项目。框架中内置了一些必要的通用模块，如路由跳转、数据存储、事件通知等等，统一定义了模块书写和调用方式，对外也提供一套扩展模块功能接口。采用多页开发的形式，用webpack进行打包，将生成的文件并入zip包中，让渲染容器从本地快速加载js文件，当然你也可以选择从远程服务器加载js文件。
+
+源码地址 : ht">
+<meta property="og:updated_time" content="2018-12-16T07:39:52.710Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Weex开发工程化框架 fit-we">
+<meta name="twitter:description" content="fit-we是一套weex开发工程化框架，无侵入且扩展性强，可以让你轻松使用weex开发移动项目。框架中内置了一些必要的通用模块，如路由跳转、数据存储、事件通知等等，统一定义了模块书写和调用方式，对外也提供一套扩展模块功能接口。采用多页开发的形式，用webpack进行打包，将生成的文件并入zip包中，让渲染容器从本地快速加载js文件，当然你也可以选择从远程服务器加载js文件。
+
+源码地址 : ht">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6346434820096132000',
+      author: '楼主大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/22/Weex开发工程化框架 fit-we/"/>
+
+
+
+
+
+  <title> Weex开发工程化框架 fit-we | 热土豆1号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">热土豆1号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/22/Weex开发工程化框架 fit-we/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="minyangcheng">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="热土豆1号">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="热土豆1号" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Weex开发工程化框架 fit-we
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-22T19:26:54+08:00">
+              2018-04-22
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2018-12-16T15:39:52+08:00">
+              2018-12-16
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>fit-we是一套weex开发工程化框架，无侵入且扩展性强，可以让你轻松使用weex开发移动项目。框架中内置了一些必要的通用模块，如路由跳转、数据存储、事件通知等等，统一定义了模块书写和调用方式，对外也提供一套扩展模块功能接口。采用多页开发的形式，用webpack进行打包，将生成的文件并入zip包中，让渲染容器从本地快速加载js文件，当然你也可以选择从远程服务器加载js文件。</p>
+<blockquote>
+<p>源码地址 : <a href="https://github.com/minyangcheng/fit-we" target="_blank" rel="external">https://github.com/minyangcheng/fit-we</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="如何接入"><a href="#如何接入" class="headerlink" title="如何接入"></a>如何接入</h2><h3 id="android"><a href="#android" class="headerlink" title="android"></a>android</h3><ul>
+<li><p>引入fit-we库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile project(&apos;:fit-we&apos;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化(通过FitWe和FitConfiguration类)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">public class App extends Application &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onCreate() &#123;</div><div class="line">        super.onCreate();</div><div class="line">        initFitWe();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    private void initFitWe() &#123;</div><div class="line">        FitConfiguration configuration = new FitConfiguration(this)</div><div class="line">            .setDebug(BuildConfig.DEBUG)</div><div class="line">            .setHostServer(BuildConfig.fitWeHostServer)</div><div class="line">            .setCheckApiHandler(new CheckApiHandler() &#123;</div><div class="line">                @Override</div><div class="line">                public void checkRequest(ResourceCheck resourceCheck) &#123;</div><div class="line">                    checkApiRequest(resourceCheck);</div><div class="line">                &#125;</div><div class="line">            &#125;).addNativeParam(&quot;apiServer&quot;, &quot;http://www.fitwe.com&quot;);</div><div class="line">        FitWe.getInstance().init(configuration);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void checkApiRequest(final ResourceCheck resourceCheck) &#123;</div><div class="line">        Request request = new Request.Builder()</div><div class="line">            .url(&quot;http://10.10.12.151:8889/checkWeexUpdate?version=&quot; + FitWe.getInstance().getVersion())</div><div class="line">            .get()</div><div class="line">            .build();</div><div class="line">        Call call = HttpManager.getHttpClient().newCall(request);</div><div class="line">        call.enqueue(new Callback() &#123;</div><div class="line">            @Override</div><div class="line">            public void onFailure(Call call, IOException e) &#123;</div><div class="line">                resourceCheck.setCheckApiFailResp(e);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</div><div class="line">                try &#123;</div><div class="line">                    JSONObject jsonObject = JSON.parseObject(response.body().string());</div><div class="line">                    int code = jsonObject.getIntValue(&quot;code&quot;);</div><div class="line">                    if (code == 1000) &#123;</div><div class="line">                        resourceCheck.setCheckApiSuccessResp(jsonObject.getString(&quot;version&quot;),</div><div class="line">                            jsonObject.getString(&quot;md5&quot;),</div><div class="line">                            jsonObject.getString(&quot;dist&quot;));</div><div class="line">                        return;</div><div class="line">                    &#125;</div><div class="line">                &#125; catch (Exception e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                resourceCheck.setCheckApiFailResp(new Exception(&quot;weex bundle check fail&quot;));</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h3><p>ios库正在开发中…….</p>
+<h3 id="weex"><a href="#weex" class="headerlink" title="weex"></a>weex</h3><p>直接下载weex端开发模板即可</p>
+<h3 id="打包（以android端为例）"><a href="#打包（以android端为例）" class="headerlink" title="打包（以android端为例）"></a>打包（以android端为例）</h3><p>运行<code>npm run build</code></p>
+<ol>
+<li>将生成的zip包放入assets文件夹，命名为bundle.zip</li>
+<li>将生成的zip包放入服务器，通过<code>FitConfiguration.setCheckApiHandler</code>实现自动更新</li>
+</ol>
+<h3 id="调试-（以android端为例）"><a href="#调试-（以android端为例）" class="headerlink" title="调试 （以android端为例）"></a>调试 （以android端为例）</h3><ol>
+<li>运行<code>npm run dev</code></li>
+<li>调用<code>FitConfiguration.setHostServer</code>设置weex文件开发所在的服务器地址</li>
+<li>修改代码后，将会自动页面</li>
+</ol>
+<h2 id="如何使用模块"><a href="#如何使用模块" class="headerlink" title="如何使用模块"></a>如何使用模块</h2><h3 id="功能实现思路"><a href="#功能实现思路" class="headerlink" title="功能实现思路"></a>功能实现思路</h3><h4 id="weex端"><a href="#weex端" class="headerlink" title="weex端"></a>weex端</h4><ol>
+<li>从api定义文件中获取到定义的模块名那（page.name）和方法名（page.apis[0].namespace），并且模块名和方法名都是和原生端定义的扩展模块文件一一对应</li>
+<li>采用js的Object.defineProperty方法将以模块名命名的对象挂载在Vue原型对象上去</li>
+<li>在每个模块内部定义方法，并以方法名称为api定义文件中的方法名</li>
+<li>每个模块中的方法最终会调用到统一函数</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">callInner</span>(<span class="params">options, resolve, reject</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> data = <span class="built_in">Object</span>.assign(&#123;&#125;, options);</div><div class="line">  data.success = <span class="literal">undefined</span>;</div><div class="line">  data.error = <span class="literal">undefined</span>;</div><div class="line">  <span class="keyword">var</span> success = options.success;</div><div class="line">  <span class="keyword">if</span> (!success) &#123;</div><div class="line">    success = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> error = options.error;</div><div class="line">  <span class="keyword">if</span> (!error) &#123;</div><div class="line">    error = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> moduleName = <span class="keyword">this</span>.api.moduleName;</div><div class="line">  <span class="keyword">var</span> namespace = <span class="keyword">this</span>.api.namespace;</div><div class="line">  <span class="keyword">var</span> weexModule = weex.requireModule(moduleName);</div><div class="line">  <span class="keyword">if</span> (weexModule &amp;&amp; weexModule[namespace]) &#123;</div><div class="line">    weexModule[namespace](data, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">      success &amp;&amp; success(value);</div><div class="line">      resolve &amp;&amp; resolve(value);</div><div class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">      error &amp;&amp; error(err);</div><div class="line">      reject &amp;&amp; reject(err);</div><div class="line">    &#125;);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">var</span> log = <span class="string">`weex can not find <span class="subst">$&#123;moduleName&#125;</span>.<span class="subst">$&#123;namespace&#125;</span>`</span>;</div><div class="line">    <span class="built_in">console</span>.error(log);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="原生端"><a href="#原生端" class="headerlink" title="原生端"></a>原生端</h4><ol>
+<li>在app启动的时候，扫描所有以<code>_fit.json</code>结尾的文件</li>
+<li>循环取出每个模块，如果该模块继承自<code>WXComponent</code>表示则该模块属于UI模块，直接注入weex中;如果继承自<code>WXModule</code>，则每个用<code>@JSMethod</code>注解的方法参数必须要为<code>JSONObject params, JSCallback successCallback, JSCallback errorCallback</code>，如果模块中出现一个不合法的方法，则会忽视该模块，否则注册。</li>
+<li>原生端和weex端传输数据采用JSONObject，并且一定还要定义一个成功回调函数和一个失败回调函数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">public class ModuleLoader &#123;</div><div class="line"></div><div class="line">    public static void loadModuleFromAsset(Context context) &#123;</div><div class="line">        try &#123;</div><div class="line">            String[] fileArr = context.getAssets().list(&quot;&quot;);</div><div class="line">            String fileName = null;</div><div class="line">            for (int i = 0; i &lt; fileArr.length; i++) &#123;</div><div class="line">                fileName = fileArr[i];</div><div class="line">                if (fileName.endsWith(FitConstants.MODULE_FILE_SUFFIX)) &#123;</div><div class="line">                    String moduleJsonStr = AssetsUtil.getFromAssets(context, fileName);</div><div class="line">                    if (!TextUtils.isEmpty(moduleJsonStr)) &#123;</div><div class="line">                        JSONObject jsonObject = JSON.parseObject(moduleJsonStr);</div><div class="line">                        setupModule(context, jsonObject);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void setupModule(Context context, JSONObject jsonObject) &#123;</div><div class="line">        if (context == null || jsonObject == null || jsonObject.size() == 0) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        String moduleName = null;</div><div class="line">        String className = null;</div><div class="line">        Class clazz = null;</div><div class="line">        for (Map.Entry&lt;String, Object&gt; entry : jsonObject.entrySet()) &#123;</div><div class="line">            moduleName = entry.getKey();</div><div class="line">            className = entry.getValue().toString();</div><div class="line">            parseModule(moduleName, className);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void parseModule(String moduleName, String className) &#123;</div><div class="line">        try &#123;</div><div class="line">            Class clazz = Class.forName(className);</div><div class="line">            if (WXComponent.class.isAssignableFrom(clazz)) &#123;</div><div class="line">                FitLog.d(FitConstants.LOG_TAG, &quot;registerComponent--&gt;%s&quot;, className);</div><div class="line">                WXSDKEngine.registerComponent(moduleName, clazz, false);</div><div class="line">            &#125; else if (WXModule.class.isAssignableFrom(clazz)) &#123;</div><div class="line">                checkModule(clazz);</div><div class="line">                FitLog.d(FitConstants.LOG_TAG, &quot;registerModule--&gt;%s&quot;, className);</div><div class="line">                WXSDKEngine.registerModule(moduleName, clazz);</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            FitLog.e(FitConstants.LOG_TAG, e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void checkModule(Class clazz) &#123;</div><div class="line">        Method[] methodArr = clazz.getDeclaredMethods();</div><div class="line">        Method method = null;</div><div class="line">        for (int i = 0; i &lt; methodArr.length; i++) &#123;</div><div class="line">            method = methodArr[i];</div><div class="line">            if (method.getAnnotation(JSMethod.class) != null) &#123;</div><div class="line">                checkMethod(clazz, method);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void checkMethod(Class clazz, Method method) &#123;</div><div class="line">        if (Modifier.isPublic(method.getModifiers()) &amp;&amp; !Modifier.isStatic(method.getModifiers()) &amp;&amp; method.getReturnType().toString().equals(&quot;void&quot;)) &#123;</div><div class="line">            Class[] paramClassArr = method.getParameterTypes();</div><div class="line">            if (paramClassArr != null &amp;&amp; paramClassArr.length == 3) &#123;</div><div class="line">                if (paramClassArr[0] == JSONObject.class &amp;&amp; paramClassArr[1] == JSCallback.class &amp;&amp; paramClassArr[2] == JSCallback.class) &#123;</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        throw new RuntimeException(&quot;module &quot; + clazz.getCanonicalName() + &quot; has JSMethod define error , the method is &quot; + method.toString());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="调用模块"><a href="#调用模块" class="headerlink" title="调用模块"></a>调用模块</h4><p>有两种调用方式：</p>
+<ul>
+<li><p>回调方式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$ui.alert(&#123;</div><div class="line">              <span class="attr">title</span>: <span class="string">'提示'</span>,</div><div class="line">              <span class="attr">message</span>: <span class="string">'去进化，皮卡丘'</span>,</div><div class="line">              <span class="attr">buttonLabels</span>: [<span class="string">'取消'</span>, <span class="string">'去进化'</span>],</div><div class="line">              <span class="attr">cancelable</span>: <span class="number">1</span>,</div><div class="line">              success(result) &#123;</div><div class="line">                Vue.prototype.$ui.toast(<span class="built_in">JSON</span>.stringify(result));</div><div class="line">              &#125;,</div><div class="line">              error(err) &#123;</div><div class="line">                Vue.prototype.$ui.toast(<span class="built_in">JSON</span>.stringify(err));</div><div class="line">              &#125;</div><div class="line">            &#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>promise回调</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$ui.alert(&#123;</div><div class="line">              <span class="attr">title</span>: <span class="string">'提示'</span>,</div><div class="line">              <span class="attr">message</span>: <span class="string">'去进化，皮卡丘'</span>,</div><div class="line">              <span class="attr">buttonLabels</span>: [<span class="string">'取消'</span>, <span class="string">'去进化'</span>],</div><div class="line">              <span class="attr">cancelable</span>: <span class="number">1</span></div><div class="line">            &#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">              <span class="keyword">this</span>.$ui.toast(<span class="built_in">JSON</span>.stringify(result));</div><div class="line">            &#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</div><div class="line">              <span class="keyword">this</span>.$ui.toast(<span class="built_in">JSON</span>.stringify(err));</div><div class="line">            &#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="前端定义api文件"><a href="#前端定义api文件" class="headerlink" title="前端定义api文件"></a>前端定义api文件</h4><p>api对象上的模块名和定义方法名、需要传递的参数、兼容调用处理。之后会根据这些信息在Vue的原型对象上，通过js Object.defineProperty<br>生成一个以模块名命名的对象，该对象中的方法就是此处定义的方法。<br>当你用<code>this.$ui.toast(&#39;hello&#39;)</code>的时候，就会自动调用原生写好的$ui模块上的toast方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">name</span>: <span class="string">'$ui'</span>,</div><div class="line">  <span class="attr">apis</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="attr">namespace</span>: <span class="string">'toast'</span>,</div><div class="line">      <span class="attr">defaultParams</span>: &#123;</div><div class="line">        <span class="attr">message</span>: <span class="string">''</span>,</div><div class="line">      &#125;,</div><div class="line">      runCode(...rest) &#123;</div><div class="line">        <span class="keyword">const</span> args = compatibleStringParamsToObject.call(<span class="keyword">this</span>, rest, <span class="string">'message'</span>);</div><div class="line">        callInner.apply(<span class="keyword">this</span>, args);</div><div class="line">      &#125;,</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="attr">namespace</span>: <span class="string">'alert'</span>,</div><div class="line">      <span class="attr">defaultParams</span>: &#123;</div><div class="line">        <span class="attr">title</span>: <span class="string">''</span>,</div><div class="line">        <span class="attr">message</span>: <span class="string">''</span>,</div><div class="line">        <span class="attr">buttonLabels</span>: [<span class="string">'确定'</span>],</div><div class="line">        <span class="attr">cancelable</span>: <span class="number">1</span>,</div><div class="line">      &#125;,</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="原生端定义module"><a href="#原生端定义module" class="headerlink" title="原生端定义module"></a>原生端定义module</h4><ul>
+<li>定义原生模块<br>原生模块中的每个用<code>@JSMethod</code>注解的方法参数必须要为<code>JSONObject params, JSCallback successCallback, JSCallback errorCallback</code>，如果模块中出现一个不合法的方法，则会忽视该模块。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">public class UiModule extends WXModule &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 消息提示</div><div class="line">     * message： 需要提示的消息内容</div><div class="line">     * duration：显示时长,long或short</div><div class="line">     */</div><div class="line">    @JSMethod(uiThread = true)</div><div class="line">    public void toast(JSONObject params, JSCallback successCallback, JSCallback errorCallback) &#123;</div><div class="line">        FitContainerFragment container = UiUtil.getContainerFragment(mWXSDKInstance);</div><div class="line">        if (container != null) &#123;</div><div class="line">            String message = params.getString(&quot;message&quot;);</div><div class="line">            String duration = params.getString(&quot;duration&quot;);</div><div class="line">            if (!TextUtils.isEmpty(message)) &#123;</div><div class="line">                if (&quot;long&quot;.equalsIgnoreCase(duration)) &#123;</div><div class="line">                    Toast.makeText(container.getActivity(), message, Toast.LENGTH_LONG).show();</div><div class="line">                &#125; else &#123;</div><div class="line">                    Toast.makeText(container.getActivity(), message, Toast.LENGTH_SHORT).show();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            successCallback.invoke(null);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 弹出确认对话框</div><div class="line">     * title：标题</div><div class="line">     * message：消息</div><div class="line">     * cancelable：是否可取消</div><div class="line">     * buttonLabels：按钮数组，最多设置2个按钮</div><div class="line">     * 返回：</div><div class="line">     * which：按钮id</div><div class="line">     */</div><div class="line">    @JSMethod(uiThread = true)</div><div class="line">    public void alert(JSONObject params, final JSCallback successCallback, JSCallback errorCallback) &#123;</div><div class="line">        FitContainerFragment container = UiUtil.getContainerFragment(mWXSDKInstance);</div><div class="line">        if (container != null) &#123;</div><div class="line">            String title = params.getString(&quot;title&quot;);</div><div class="line">            String message = params.getString(&quot;message&quot;);</div><div class="line">            JSONArray jsonArray = params.getJSONArray(&quot;buttonLabels&quot;);</div><div class="line">            String btnName_1 = null;</div><div class="line">            String btnName_2 = null;</div><div class="line">            if (jsonArray != null &amp;&amp; jsonArray.size() &gt; 0) &#123;</div><div class="line">                if (jsonArray.size() == 1) &#123;</div><div class="line">                    btnName_1 = jsonArray.getString(0);</div><div class="line">                &#125; else &#123;</div><div class="line">                    btnName_1 = jsonArray.getString(0);</div><div class="line">                    btnName_2 = jsonArray.getString(1);</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                btnName_1 = &quot;确定&quot;;</div><div class="line">            &#125;</div><div class="line">            boolean cancelable = !&quot;0&quot;.equals(params.getString(&quot;cancelable&quot;));</div><div class="line">            DialogUtil.showAlertDialog(container.getActivity(), title, message, btnName_1, btnName_2, cancelable, new DialogInterface.OnClickListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onClick(DialogInterface dialogInterface, int i) &#123;</div><div class="line">                    JSONObject data = new JSONObject();</div><div class="line">                    data.put(&quot;which&quot;, 0);</div><div class="line">                    successCallback.invoke(data);</div><div class="line">                &#125;</div><div class="line">            &#125;, new DialogInterface.OnClickListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onClick(DialogInterface dialogInterface, int i) &#123;</div><div class="line">                    JSONObject data = new JSONObject();</div><div class="line">                    data.put(&quot;which&quot;, 1);</div><div class="line">                    successCallback.invoke(data);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>在以<code>_fit.json</code>文件定义该模块(android环境下该文件可放在assets文件夹中)，以便fit-we的模块加载器可以扫描到该模块<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"$navigator"</span>: <span class="string">"com.fit.we.library.extend.module.NavigatorModule"</span>,</div><div class="line">    <span class="attr">"$page"</span>: <span class="string">"com.fit.we.library.extend.module.PageModule"</span>,</div><div class="line">    <span class="attr">"$tool"</span>: <span class="string">"com.fit.we.library.extend.module.ToolModule"</span>,</div><div class="line">    <span class="attr">"$ui"</span>: <span class="string">"com.fit.we.library.extend.module.UiModule"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="调用外部扩展的模块"><a href="#调用外部扩展的模块" class="headerlink" title="调用外部扩展的模块"></a>调用外部扩展的模块</h4><p>调用$pay模块上的payMoney</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$zeus.callApi(&#123;</div><div class="line">              <span class="attr">module</span>: <span class="string">'$pay'</span>,</div><div class="line">              <span class="attr">name</span>: <span class="string">'payMoney'</span>,</div><div class="line">              <span class="attr">money</span>: <span class="string">'100'</span>,</div><div class="line">            &#125;).then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</div><div class="line">              <span class="keyword">this</span>.$ui.toast(<span class="built_in">JSON</span>.stringify(value))</div><div class="line">            &#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</div><div class="line">              <span class="keyword">this</span>.$ui.toast(<span class="built_in">JSON</span>.stringify(err))</div><div class="line">            &#125;);</div></pre></td></tr></table></figure>
+<h2 id="如何使用事件通知"><a href="#如何使用事件通知" class="headerlink" title="如何使用事件通知"></a>如何使用事件通知</h2><h3 id="功能实现思路-1"><a href="#功能实现思路-1" class="headerlink" title="功能实现思路"></a>功能实现思路</h3><h4 id="weex端-1"><a href="#weex端-1" class="headerlink" title="weex端"></a>weex端</h4><p>实现一个类似于事件中心功能，可以订阅方法和取消订阅方法，由于项目采用多页面开发的原因，因此两个页面之间还需要借助原生端来进行通信</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> messageHandlers = &#123;&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> globalEvent = weex.requireModule(<span class="string">'globalEvent'</span>);</div><div class="line"><span class="keyword">var</span> pageModule = weex.requireModule(<span class="string">'$page'</span>);</div><div class="line"></div><div class="line">globalEvent.addEventListener(<span class="string">"eventbus"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">message</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">`eventbus receive message=<span class="subst">$&#123;message&#125;</span>`</span>);</div><div class="line">  <span class="keyword">let</span> keyArr = <span class="built_in">Object</span>.keys(messageHandlers);</div><div class="line">  keyArr.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">value, index</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (value === message.type || value.indexOf(message.type, value.length - message.type.length) !== <span class="number">-1</span>) &#123;</div><div class="line">      <span class="keyword">const</span> handler = messageHandlers[value];</div><div class="line">      <span class="keyword">const</span> data = message.data;</div><div class="line">      handler &amp;&amp; handler(data);</div><div class="line">    &#125;</div><div class="line">  &#125;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> on = <span class="function"><span class="keyword">function</span> (<span class="params">eventName, handlerFun</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (eventName &amp;&amp; handlerFun) &#123;</div><div class="line">    <span class="keyword">var</span> name = weex.config.bundleUrl + <span class="string">'_'</span> + eventName;</div><div class="line">    messageHandlers[name] = handlerFun;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> off = <span class="function"><span class="keyword">function</span> (<span class="params">eventName</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> name = weex.config.bundleUrl + <span class="string">'_'</span> + eventName;</div><div class="line">  <span class="keyword">delete</span> messageHandlers[name];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> post = <span class="function"><span class="keyword">function</span> (<span class="params">type, data</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> success = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">`post event success type=<span class="subst">$&#123;type&#125;</span> ,data=<span class="subst">$&#123;data&#125;</span>`</span>);</div><div class="line">  <span class="keyword">var</span> error = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">`post event fail type=<span class="subst">$&#123;type&#125;</span> ,data=<span class="subst">$&#123;data&#125;</span>`</span>);</div><div class="line">  pageModule.postEvent(&#123;type, data&#125;, success, error);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> plugin = &#123;&#125;;</div><div class="line">plugin.install = <span class="function"><span class="keyword">function</span> (<span class="params">Vue, options</span>) </span>&#123;</div><div class="line">  Vue.prototype.$event = &#123;on, off, post&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = plugin;</div></pre></td></tr></table></figure>
+<h4 id="原生端-1"><a href="#原生端-1" class="headerlink" title="原生端"></a>原生端</h4><p>通过weex先前注入module接受事件，然后在将事件通过原生端的事件总线功能转发到每个页面，每个页面接受到后，会通过weex的golbalevent转发到定义weex端定义的事件总线</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public void onEvent(FitEvent event) &#123;</div><div class="line">    if (mWXSDKInstance != null) &#123;</div><div class="line">        Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</div><div class="line">        map.put(&quot;type&quot;, event.type);</div><div class="line">        map.put(&quot;data&quot;, event.data);</div><div class="line">        mWXSDKInstance.fireGlobalEventCallback(&quot;eventbus&quot;, map);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>原生端如果需要接受weex页面发布的通知，只需要订阅FitEvent即可</strong></p>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><h4 id="订阅"><a href="#订阅" class="headerlink" title="订阅"></a>订阅</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$event.on(<span class="string">'getUserName'</span>, (data) =&gt; &#123;</div><div class="line">        Vue.prototype.$ui.toast(<span class="built_in">JSON</span>.stringify(data));</div><div class="line">      &#125;);</div></pre></td></tr></table></figure>
+<h4 id="取消订阅"><a href="#取消订阅" class="headerlink" title="取消订阅"></a>取消订阅</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$event.off(<span class="string">'getUserName'</span>);</div></pre></td></tr></table></figure>
+<h4 id="发布事件"><a href="#发布事件" class="headerlink" title="发布事件"></a>发布事件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$event.post(<span class="string">'getUserName'</span>, &#123;<span class="attr">name</span>: <span class="string">'minych'</span>&#125;);</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/05/混合开发工程化框架 fit-hybrid/" rel="next" title="混合开发工程化框架 fit-hybrid">
+                <i class="fa fa-chevron-left"></i> 混合开发工程化框架 fit-hybrid
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/18/怎样爬取竞争公司app上的加密数据/" rel="prev" title="怎样爬取竞争公司app上的加密数据">
+                怎样爬取竞争公司app上的加密数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="minyangcheng" />
+          <p class="site-author-name" itemprop="name">minyangcheng</p>
+          <p class="site-description motion-element" itemprop="description">生活其实是一种状态，好坏全凭的是前期的准备和现场发挥！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minyangcheng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://lymuxh.github.io" title="穆小灰灰" target="_blank">穆小灰灰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zyfzyfhaha.github.io" title="峰哥" target="_blank">峰哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何接入"><span class="nav-number">1.</span> <span class="nav-text">如何接入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#android"><span class="nav-number">1.1.</span> <span class="nav-text">android</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ios"><span class="nav-number">1.2.</span> <span class="nav-text">ios</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#weex"><span class="nav-number">1.3.</span> <span class="nav-text">weex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包（以android端为例）"><span class="nav-number">1.4.</span> <span class="nav-text">打包（以android端为例）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试-（以android端为例）"><span class="nav-number">1.5.</span> <span class="nav-text">调试 （以android端为例）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用模块"><span class="nav-number">2.</span> <span class="nav-text">如何使用模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能实现思路"><span class="nav-number">2.1.</span> <span class="nav-text">功能实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#weex端"><span class="nav-number">2.1.1.</span> <span class="nav-text">weex端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原生端"><span class="nav-number">2.1.2.</span> <span class="nav-text">原生端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调用模块"><span class="nav-number">2.2.1.</span> <span class="nav-text">调用模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前端定义api文件"><span class="nav-number">2.2.2.</span> <span class="nav-text">前端定义api文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原生端定义module"><span class="nav-number">2.2.3.</span> <span class="nav-text">原生端定义module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用外部扩展的模块"><span class="nav-number">2.2.4.</span> <span class="nav-text">调用外部扩展的模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用事件通知"><span class="nav-number">3.</span> <span class="nav-text">如何使用事件通知</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能实现思路-1"><span class="nav-number">3.1.</span> <span class="nav-text">功能实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#weex端-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">weex端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原生端-1"><span class="nav-number">3.1.2.</span> <span class="nav-text">原生端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-1"><span class="nav-number">3.2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#订阅"><span class="nav-number">3.2.1.</span> <span class="nav-text">订阅</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#取消订阅"><span class="nav-number">3.2.2.</span> <span class="nav-text">取消订阅</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发布事件"><span class="nav-number">3.2.3.</span> <span class="nav-text">发布事件</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">minyangcheng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

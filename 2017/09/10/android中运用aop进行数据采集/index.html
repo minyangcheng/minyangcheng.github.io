@@ -1,0 +1,675 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="android开发中做数据埋点一般都是直接写在方法里面，这样做虽说是能够完成功能，但是代码的入侵性太强，整体埋点通用性也不强。在后台开发中，对系统可以采用aop进行日志和性能监控，于是搜了下android中也是可以采用aop的方式进行日志记录和性能监控的。
+
+源码地址">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android中运用aop进行数据采集">
+<meta property="og:url" content="http://yoursite.com/2017/09/10/android中运用aop进行数据采集/index.html">
+<meta property="og:site_name" content="热土豆1号">
+<meta property="og:description" content="android开发中做数据埋点一般都是直接写在方法里面，这样做虽说是能够完成功能，但是代码的入侵性太强，整体埋点通用性也不强。在后台开发中，对系统可以采用aop进行日志和性能监控，于是搜了下android中也是可以采用aop的方式进行日志记录和性能监控的。
+
+源码地址">
+<meta property="og:updated_time" content="2018-03-08T12:59:18.868Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android中运用aop进行数据采集">
+<meta name="twitter:description" content="android开发中做数据埋点一般都是直接写在方法里面，这样做虽说是能够完成功能，但是代码的入侵性太强，整体埋点通用性也不强。在后台开发中，对系统可以采用aop进行日志和性能监控，于是搜了下android中也是可以采用aop的方式进行日志记录和性能监控的。
+
+源码地址">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6346434820096132000',
+      author: '楼主大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/10/android中运用aop进行数据采集/"/>
+
+
+
+
+
+  <title> android中运用aop进行数据采集 | 热土豆1号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">热土豆1号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/10/android中运用aop进行数据采集/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="minyangcheng">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="热土豆1号">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="热土豆1号" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                android中运用aop进行数据采集
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-10T12:45:09+08:00">
+              2017-09-10
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2018-03-08T20:59:18+08:00">
+              2018-03-08
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>android开发中做数据埋点一般都是直接写在方法里面，这样做虽说是能够完成功能，但是代码的入侵性太强，整体埋点通用性也不强。在后台开发中，对系统可以采用aop进行日志和性能监控，于是搜了下android中也是可以采用aop的方式进行日志记录和性能监控的。</p>
+<blockquote>
+<p><a href="https://github.com/minyangcheng/WorkStation/tree/master/Android/aop-demo" target="_blank" rel="external">源码地址</a></p>
+</blockquote>
+<a id="more"></a>
+<h3 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h3><ol>
+<li>面向切面编程，这里采用aspectj</li>
+<li>gradle自定义插件，在代码编译时调用aspectj进行处理</li>
+<li>自定义编译时注解，运行时注解</li>
+</ol>
+<h4 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h4><ul>
+<li>自定义gradle插件，在代码编译时调用aspectj进行处理，主要参考开源项目<a href="https://github.com/JakeWharton/hugo" target="_blank" rel="external">hugo</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">public class AspectPlugin implements Plugin&lt;Project&gt; &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    void apply(Project project) &#123;</div><div class="line">        def hasApp = project.plugins.withType(AppPlugin)</div><div class="line">        def hasLib = project.plugins.withType(LibraryPlugin)</div><div class="line">        if (!hasApp &amp;&amp; !hasLib) &#123;</div><div class="line">            throw new IllegalStateException(&quot;&apos;android&apos; or &apos;android-library&apos; plugin required.&quot;)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        final def log = project.logger</div><div class="line">        final def variants</div><div class="line">        if (hasApp) &#123;</div><div class="line">            variants = project.android.applicationVariants</div><div class="line">        &#125; else &#123;</div><div class="line">            variants = project.android.libraryVariants</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        project.dependencies &#123;</div><div class="line">            compile &apos;org.aspectj:aspectjrt:1.8.6&apos;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        variants.all &#123; variant -&gt;</div><div class="line"></div><div class="line">            JavaCompile javaCompile = variant.javaCompile</div><div class="line">            javaCompile.doLast &#123;</div><div class="line">                String[] args = [&quot;-showWeaveInfo&quot;,</div><div class="line">                                 &quot;-1.5&quot;,</div><div class="line">                                 &quot;-inpath&quot;, javaCompile.destinationDir.toString(),</div><div class="line">                                 &quot;-aspectpath&quot;, javaCompile.classpath.asPath,</div><div class="line">                                 &quot;-d&quot;, javaCompile.destinationDir.toString(),</div><div class="line">                                 &quot;-classpath&quot;, javaCompile.classpath.asPath,</div><div class="line">                                 &quot;-bootclasspath&quot;, project.android.bootClasspath.join(File.pathSeparator)]</div><div class="line">                log.debug &quot;ajc args: &quot; + Arrays.toString(args)</div><div class="line"></div><div class="line">                MessageHandler handler = new MessageHandler(true);</div><div class="line">                new Main().run(args, handler);</div><div class="line">                for (IMessage message : handler.getMessages(null, true)) &#123;</div><div class="line">                    switch (message.getKind()) &#123;</div><div class="line">                        case IMessage.ABORT:</div><div class="line">                        case IMessage.ERROR:</div><div class="line">                        case IMessage.FAIL:</div><div class="line">                            log.error message.message, message.thrown</div><div class="line">                            break;</div><div class="line">                        case IMessage.WARNING:</div><div class="line">                            log.warn message.message, message.thrown</div><div class="line">                            break;</div><div class="line">                        case IMessage.INFO:</div><div class="line">                            log.info message.message, message.thrown</div><div class="line">                            break;</div><div class="line">                        case IMessage.DEBUG:</div><div class="line">                            log.debug message.message, message.thrown</div><div class="line">                            break;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>在app中引入插件<code>apply plugin: &#39;com.min.aspect&#39;</code></li>
+<li>定义注解，编译时注解用于标记切点，运行时注解用于记录埋点名称以便在后面获取</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by minyangcheng on 2017/9/7.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * 用于注解切点方法</div><div class="line"> */</div><div class="line"></div><div class="line">@Target(ElementType.METHOD)</div><div class="line">@Retention(RetentionPolicy.CLASS)</div><div class="line">public @interface RecordPoint &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by minyangcheng on 2017/9/7.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * 用于注解埋点动作名称</div><div class="line"> */</div><div class="line"></div><div class="line">@Target(ElementType.METHOD)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">public @interface RecordLog &#123;</div><div class="line"></div><div class="line">    String value() default &quot;&quot;;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>定义切面和处理方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">@Aspect</div><div class="line">public class RecordLogAspect &#123;</div><div class="line"></div><div class="line">    private static final SimpleDateFormat SDF = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</div><div class="line"></div><div class="line">    private static final String POINTCUT_METHOD =</div><div class="line">            &quot;execution(@com.min.aop_demo.record.RecordPoint * *(..))&quot;;</div><div class="line"></div><div class="line">    @Pointcut(POINTCUT_METHOD)</div><div class="line">    public void methodAnnotatedWithRecordLog() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Around(&quot;methodAnnotatedWithRecordLog()&quot;)</div><div class="line">    public Object weaveJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable &#123;</div><div class="line">        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();</div><div class="line">        Method method = methodSignature.getMethod();</div><div class="line">        method.setAccessible(true);</div><div class="line">        String className = method.getDeclaringClass().getName();</div><div class="line">        String methodName = method.getName();</div><div class="line">        RecordLog recordLog = method.getAnnotation(RecordLog.class);</div><div class="line">        String name = recordLog.value();</div><div class="line">        Object result = joinPoint.proceed();</div><div class="line">        String pointPos = className + &quot;.&quot; + methodName + &quot;()&quot;;</div><div class="line">        RecordHandler.getInstance().handle(pointPos, name, result);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class RecordHandler &#123;</div><div class="line"></div><div class="line">    private static class HOLDER &#123;</div><div class="line">        public static final RecordHandler INSTANCE = new RecordHandler();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private RecordHandler() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static RecordHandler getInstance() &#123;</div><div class="line">        return HOLDER.INSTANCE;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 处理埋点数据回调</div><div class="line">     *</div><div class="line">     * @param point        埋点位置信息:类名方法</div><div class="line">     * @param name         埋点名称</div><div class="line">     * @param externalData 埋点附加数据，该数据由被埋点方法的返回，可能为空</div><div class="line">     */</div><div class="line">    public void handle(String point, String name, Object externalData) &#123;</div><div class="line">        Timber.d(&quot;point=%s , name=%s , result=%s&quot;, point, name, externalData);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ol>
+<li><a href="http://www.jianshu.com/p/0fa8073fd144" target="_blank" rel="external">http://www.jianshu.com/p/0fa8073fd144</a></li>
+<li><a href="https://github.com/JakeWharton/hugo" target="_blank" rel="external">https://github.com/JakeWharton/hugo</a></li>
+<li><a href="http://blog.csdn.net/eclipsexys/article/details/50973205" target="_blank" rel="external">http://blog.csdn.net/eclipsexys/article/details/50973205</a></li>
+<li><a href="http://blog.csdn.net/crazy__chen/article/details/52014672" target="_blank" rel="external">http://blog.csdn.net/crazy__chen/article/details/52014672</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/31/探究Android网络请求库/" rel="next" title="探究Android网络请求库">
+                <i class="fa fa-chevron-left"></i> 探究Android网络请求库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/11/sping boot 自动化mock接口/" rel="prev" title="sping boot 自动化mock接口">
+                sping boot 自动化mock接口 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="minyangcheng" />
+          <p class="site-author-name" itemprop="name">minyangcheng</p>
+          <p class="site-description motion-element" itemprop="description">生活其实是一种状态，好坏全凭的是前期的准备和现场发挥！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minyangcheng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://lymuxh.github.io" title="穆小灰灰" target="_blank">穆小灰灰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zyfzyfhaha.github.io" title="峰哥" target="_blank">峰哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#技术点"><span class="nav-number">1.</span> <span class="nav-text">技术点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现步骤"><span class="nav-number">1.1.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">1.2.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">minyangcheng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
