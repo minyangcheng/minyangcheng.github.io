@@ -5,6 +5,8 @@ tags: android
 ---
 随着app不断迭代，业务越多，每个业务代码也越来越复杂，采用传统单一机构模式，势必会影响开发和测试效率，很不方便进行多人并行开发和测试。于是对公司的项目也在不断迭代中，进行组件化重构。
 
+>源码地址 : <https://github.com/minyangcheng/android-modularization>
+
 <!-- more -->
 
 ## 单一模式（架构1.0.0）
