@@ -1,0 +1,760 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="本文涉及内容的源码地址：https://github.com/minyangcheng/JiaGuSample">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈Android逆向与加固">
+<meta property="og:url" content="http://yoursite.com/2018/09/26/浅谈Android逆向与加固/index.html">
+<meta property="og:site_name" content="热土豆1号">
+<meta property="og:description" content="本文涉及内容的源码地址：https://github.com/minyangcheng/JiaGuSample">
+<meta property="og:image" content="http://yoursite.com/images/20190226_01.webp">
+<meta property="og:image" content="http://yoursite.com/images/20190226_04.webp">
+<meta property="og:image" content="http://yoursite.com/images/20190226_02.webp">
+<meta property="og:image" content="http://yoursite.com/images/20190226_03.webp">
+<meta property="og:updated_time" content="2019-02-26T06:46:19.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈Android逆向与加固">
+<meta name="twitter:description" content="本文涉及内容的源码地址：https://github.com/minyangcheng/JiaGuSample">
+<meta name="twitter:image" content="http://yoursite.com/images/20190226_01.webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6346434820096132000',
+      author: '楼主大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/26/浅谈Android逆向与加固/"/>
+
+
+
+
+
+  <title> 浅谈Android逆向与加固 | 热土豆1号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">热土豆1号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/26/浅谈Android逆向与加固/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="minyangcheng">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="热土豆1号">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="热土豆1号" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                浅谈Android逆向与加固
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-26T17:07:09+08:00">
+              2018-09-26
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2019-02-26T14:46:19+08:00">
+              2019-02-26
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文涉及内容的源码地址：<a href="https://github.com/minyangcheng/JiaGuSample" target="_blank" rel="external">https://github.com/minyangcheng/JiaGuSample</a></p>
+</blockquote>
+<a id="more"></a>
+<h3 id="破解一个app"><a href="#破解一个app" class="headerlink" title="破解一个app"></a>破解一个app</h3><h4 id="步骤一：脱壳"><a href="#步骤一：脱壳" class="headerlink" title="步骤一：脱壳"></a>步骤一：脱壳</h4><p>脱壳简单来讲其实就是获取app dex文件(应用源码编译的结果都被放在dex文件里面)，我这里介绍下以下两个简便的方法，基本上能成功脱壳市场上80%的应用，这次公司业务需要破解的应用，用方法二都能成功脱壳。当然你也可以用ZjDroid、DexHunter等工具。</p>
+<h5 id="脱壳方法一"><a href="#脱壳方法一" class="headerlink" title="脱壳方法一"></a>脱壳方法一</h5><p>原理：Android4.4以上开始使用ART虚拟机，在此之前我们一直使用的Dalvik虚拟机，ART虚拟机需要用dex2oat将未加密的dex数据编译成oat，那么加固的壳一般都会在dex2oat的之前进行dex解密，因此通过修改dex2oat的代码，在其中插入一段将解密后的dex写出来的代码，即可dump出解密后的dex。</p>
+<ol>
+<li>一个android4.4系统虚拟机</li>
+<li>修改代码后的dex2oat(用于替换/system/bin/dex2oat位置的文件)</li>
+<li>在开发者工具里面将运行环境选择为：ART运行模式</li>
+<li>重启虚拟机，安装app，启动app</li>
+</ol>
+<h5 id="脱壳方法二"><a href="#脱壳方法二" class="headerlink" title="脱壳方法二"></a>脱壳方法二</h5><p>原理：android中的java.lang.Class类拥有一个方法<code>public native Dex getDex();</code>，这意味着我们能通过Class对象的<code>getDex</code>方法获取到<code>Dex</code>对象，<code>Dex</code>类中有一个方法<code>public byte[] getBytes()</code>，我们能通过此方法获取获取该class对象关联的dex数据。这里采用的是Xposed去hook应用的<code>ClassLoader.loadClass</code>方法区dump解密后的dex数据。</p>
+<ol>
+<li>一个root过的手机，系统要求在4.4到6.0之间</li>
+<li>安装xposed：该工具的原理是修改系统文件，替换了/system/bin/app_process可执行文件，在启动Zygote时加载额外的jar文件（/data/data/de.robv.android.xposed.installer/bin/XposedBridge.jar），并执行一些初始化操作(执行XposedBridge的main方法)。然后我们就可以在这个Zygote上下文中进行某些hook操作。</li>
+<li>安装dumpdex：自己写的一个可以脱壳的app，实际上是一个xposed模块</li>
+<li>安装需要脱壳的app</li>
+<li>重启手机，启动app</li>
+</ol>
+<h4 id="步骤二：从dex文件和apk文件中获取app代码和资源"><a href="#步骤二：从dex文件和apk文件中获取app代码和资源" class="headerlink" title="步骤二：从dex文件和apk文件中获取app代码和资源"></a>步骤二：从dex文件和apk文件中获取app代码和资源</h4><p>将脱壳后的dex和源app放在一个统一目录下，运行以下脚本，获取app源码和资源。</p>
+<p>该脚本其实是调用<em>jadx工具</em>来实现反编译，然后用<em>Intellij</em>打开生成的dist目录，将sources标记为sources root，将resources标记为resources root，即可开始分析应用的代码。当然你也可以用Source Insight等工具进行源码分析。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">public class ReCompileCode &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        try &#123;</div><div class="line">            if (args == null &amp;&amp; args.length == 0) &#123;</div><div class="line">                System.out.println(&quot;请传递dex目录文件夹&quot;);</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">            File dexDirFile = new File(args[0]);</div><div class="line">            if (!dexDirFile.exists()) &#123;</div><div class="line">                System.out.println(&quot;dex目录文件夹不存在&quot;);</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">            File distDirFile = new File(dexDirFile, &quot;dist&quot;);</div><div class="line">            if (!distDirFile.exists()) &#123;</div><div class="line">                distDirFile.mkdirs();</div><div class="line">            &#125;</div><div class="line">            File[] dexFileArr = dexDirFile.listFiles(new FileFilter() &#123;</div><div class="line">                @Override</div><div class="line">                public boolean accept(File file) &#123;</div><div class="line">                    return file.getName().endsWith(&quot;.dex&quot;) || file.getName().endsWith(&quot;.apk&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            Process process = null;</div><div class="line">            String s = null;</div><div class="line">            System.out.println(&quot;......开始解析......&quot;);</div><div class="line">            for (File dexFile : dexFileArr) &#123;</div><div class="line">                String cmd = &quot;jadx -d &quot; + distDirFile.getAbsolutePath() + &quot; &quot; + dexFile.getAbsolutePath();</div><div class="line">                process = Runtime.getRuntime().exec(cmd);</div><div class="line">                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));</div><div class="line">                while ((s = bufferedReader.readLine()) != null) &#123;</div><div class="line">                &#125;</div><div class="line">                process.waitFor();</div><div class="line">                System.out.println(dexFile.getAbsolutePath() + &quot;...解析完成... code=&quot; + process.exitValue());</div><div class="line">            &#125;</div><div class="line">            System.out.println(&quot;......解析结束......&quot;);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="步骤三：动态分析"><a href="#步骤三：动态分析" class="headerlink" title="步骤三：动态分析"></a>步骤三：动态分析</h4><p>如果你是为了爬取app的数据，就去针对app的网络请求层进行分析，通过分析得出这个app的请求网络传输参数和加密逻辑，然后你可以通过xposed在关键方法上设置一个切面，甚至你可以直接将app的网络加解密代码提取出来，通过接口请求去爬去数据。<br>如果你是为了用app的某个收费功能，就去该功能页面的入口处，寻找判断该收费能否使用的代码，然后通过xposed直接hook掉判断逻辑即可。</p>
+<blockquote>
+<p>这里推荐一个动态分析工具Inspeckage，它是一个基于Xposed开发的一款应用，核心功能有监控Shared Preferences数、加密、哈希、SQLite、HTTP、WebView数据，还能动态添加新钩子。</p>
+</blockquote>
+<p><img src="/images/20190226_01.webp" alt=""></p>
+<h4 id="步骤四：hook掉关键的方法"><a href="#步骤四：hook掉关键的方法" class="headerlink" title="步骤四：hook掉关键的方法"></a>步骤四：hook掉关键的方法</h4><p>写一个xposed模块直接hook找到的关键方法，我这里发现该app在数据返回的时候总会去调用<code>com.easypass.carstong.protocol.bean.ResultBean.getData</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public class CheXiaoTongHook extends BaseHook &#123;</div><div class="line"></div><div class="line">    public CheXiaoTongHook() &#123;</div><div class="line">        super(&quot;com.easypass.carstong&quot;, &quot;com.easypass.carstong.protocol.bean.ResultBean&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void handleLoadPackage(Class clazz) throws Exception &#123;</div><div class="line">        XposedHelpers.findAndHookMethod(clazz, &quot;getData&quot;, new XC_MethodHook() &#123;</div><div class="line">            @Override</div><div class="line">            protected void afterHookedMethod(MethodHookParam param) throws Throwable &#123;</div><div class="line">                Object response = param.getResult();</div><div class="line">                if (response != null) &#123;</div><div class="line">                    JSONObject jsonObject = new JSONObject();</div><div class="line">                    jsonObject.put(&quot;packageName&quot;, packageName);</div><div class="line">                    jsonObject.put(&quot;activityName&quot;, getCurrentActivityName());</div><div class="line">                    jsonObject.put(&quot;responseData&quot;, response);</div><div class="line">                    String content = jsonObject.toString();</div><div class="line">                    Logger.d(TAG, response + &quot;\n\n&quot;);</div><div class="line">                    FileLogger.log(content);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后我们就能查看接口数据的返回：</p>
+<p><img src="/images/20190226_04.webp" alt=""></p>
+<h3 id="了解app加固"><a href="#了解app加固" class="headerlink" title="了解app加固"></a>了解app加固</h3><p>对app进行加固，可以有效防止移动应用被破解、盗版、二次打包、注入、反编译等，保障程序的安全性、稳定性。加固技术这几年也是不断在迭代，各厂商所采用的技术也不一样。</p>
+<ol>
+<li>360基本上是把原始的dex加密存在了一个so中，加载之前解密</li>
+<li>阿里把一些class_data_item和code_item拆出去了，打开dex时会修复之间的关系，同时一些annotation_off是无效的的来防止静态解析</li>
+<li>百度是把一些class_data_item拆走了，与阿里很像，同时它还会抹去dex文件的头部；它也会选择个别方法重新包装，达到调用前还原，调用后抹去的效果</li>
+<li>梆梆和爱加密与360的做法很像，梆梆把一堆read,write,mmap等libc函数hook了，防止读取相关dex的区域，爱加密的字符串会变，但是只是文件名变目录不变</li>
+<li>腾讯针对于被保护的类或方法造了一个假的class_data_item，不包含被保护的内容。真正的class_data_item会在运行的时候释放并连接上去，但是code_item却始终存在于dex文件里，它用无效数据填充annotation_off和debug_info_off来实现干扰反编译</li>
+</ol>
+<h3 id="实现一个简单加固"><a href="#实现一个简单加固" class="headerlink" title="实现一个简单加固"></a>实现一个简单加固</h3><h4 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h4><ul>
+<li>类加载</li>
+</ul>
+<p>类加载采用的是<code>ClassLoader</code>子类完成，具体作用是将class文件按需加载在VM虚拟机中，加载过程采用的是双亲委托来完成。</p>
+<p>java中的类加载器：</p>
+<table>
+<thead>
+<tr>
+<th>ClassLoader</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BootStrapClassLoader</td>
+<td>加载<code>sun.boot.class.path</code>环境属性下的jar或class文件，C++编写</td>
+</tr>
+<tr>
+<td>ExtClassLoader</td>
+<td>加载<code>java.ext.dirs</code>环境属性下的jar或class文件，父加载器为：BootStrapClassLoader</td>
+</tr>
+<tr>
+<td>AppClassLoader</td>
+<td>加载<code>java.class.path</code>环境属性下的jar或class文件,父加载器为：ExtClassLoader</td>
+</tr>
+</tbody>
+</table>
+<p>android中的类加载器：</p>
+<table>
+<thead>
+<tr>
+<th>ClassLoader</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BootStrapClassLoader</td>
+<td>Android系统启动的时候被创建，加载一些Android系统框架类</td>
+</tr>
+<tr>
+<td>PathClassLoader</td>
+<td>加载一些系统类以及应用程序类，父加载器为：BootStrapClassLoader</td>
+</tr>
+<tr>
+<td>DexClassLoader</td>
+<td>加载jar、apk、dex文件,父加载器可以根据需求设置</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li>dex文件格式</li>
+</ul>
+<p>dex文件的基本结构：<br><img src="/images/20190226_02.webp" alt=""></p>
+<p>010Editor查看dex文件（数据区data不展示）：<br><img src="/images/20190226_03.webp" alt=""></p>
+<p>上面两张图片展示了dex文件的基本结构和一些数据块基本含义。具体每个数据块的作用和含义，请自行查看官方文档或谷歌搜索。<br>我们这里需要用的有：</p>
+<ol>
+<li>checksum: 文件校验码，使用 alder32 算法校验文件除去 maigc、checksum 外余下的所有文件区域，用于检 查文件错误。</li>
+<li>signature: 使用 SHA-1 算法 hash 除去 magic、checksum 和 signature 外余下的所有文件区域， 用于唯一识别本文件 。</li>
+<li>file_size: dex 文件大小</li>
+</ol>
+<h4 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h4><p>源应用、壳应用、加固脚本：</p>
+<ul>
+<li>被加固的应用称为源应用</li>
+<li>解密并加载源应用的应用称为壳应用。壳应用中有个自定义的<code>Application</code>类，该类主要作用是解密源应用，创建<code>DexClassLoader</code>，在运行的时候替换默认的<code>ClassLoader</code>，重建<code>application实例</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">//替换调默认的classloader</div><div class="line">@Override</div><div class="line"> protected void attachBaseContext(Context base) &#123;</div><div class="line">     super.attachBaseContext(base);</div><div class="line">     try &#123;</div><div class="line">         File odex = this.getDir(&quot;payload_odex&quot;, MODE_PRIVATE);</div><div class="line">         File libs = this.getDir(&quot;payload_lib&quot;, MODE_PRIVATE);</div><div class="line">         odexPath = odex.getAbsolutePath();</div><div class="line">         libPath = libs.getAbsolutePath();</div><div class="line">         apkFileName = odex.getAbsolutePath() + &quot;/source.apk&quot;;</div><div class="line"></div><div class="line">         File dexFile = new File(apkFileName);</div><div class="line">         if (!dexFile.exists()) &#123;</div><div class="line">             dexFile.createNewFile();</div><div class="line">             byte[] dexdata = this.readDexFileFromApk();</div><div class="line">             this.splitPayLoadFromDex(dexdata);</div><div class="line">         &#125;</div><div class="line">         ....</div><div class="line">         DexClassLoader dLoader = new DexClassLoader(apkFileName, odexPath,</div><div class="line">                 libPath, base.getClassLoader());</div><div class="line"></div><div class="line">         RefInvoke.setFieldOjbect(&quot;android.app.LoadedApk&quot;, &quot;mClassLoader&quot;, loadApk, dLoader);</div><div class="line"></div><div class="line">     &#125; catch (Exception e) &#123;</div><div class="line">         e.printStackTrace();</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line">//重建application，保证源应用中的自定义application生命周期能够正常被调用</div><div class="line"> @SuppressLint(&quot;MissingSuperCall&quot;)</div><div class="line"> @Override</div><div class="line"> public void onCreate() &#123;</div><div class="line">     // 填写源应用的application全量类路径</div><div class="line">     String appClassName = &quot;com.min.source.App&quot;;</div><div class="line"></div><div class="line">     Object currentActivityThread = RefInvoke.invokeStaticMethod(</div><div class="line">             &quot;android.app.ActivityThread&quot;, &quot;currentActivityThread&quot;,</div><div class="line">             new Class[]&#123;&#125;, new Object[]&#123;&#125;);</div><div class="line">     Object mBoundApplication = RefInvoke.getFieldOjbect(</div><div class="line">             &quot;android.app.ActivityThread&quot;, currentActivityThread,</div><div class="line">             &quot;mBoundApplication&quot;);</div><div class="line">     ....</div><div class="line">     Application app = (Application) RefInvoke.invokeMethod(</div><div class="line">             &quot;android.app.LoadedApk&quot;, &quot;makeApplication&quot;, loadedApkInfo,</div><div class="line">             new Class[]&#123;boolean.class, Instrumentation.class&#125;,</div><div class="line">             new Object[]&#123;false, null&#125;);// 执行</div><div class="line">     RefInvoke.setFieldOjbect(&quot;android.app.ActivityThread&quot;,</div><div class="line">             &quot;mInitialApplication&quot;, currentActivityThread, app);</div><div class="line">    ....</div><div class="line">     app.onCreate();</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> //从壳应用dex文件中抽取出</div><div class="line"> private void splitPayLoadFromDex(byte[] data) throws IOException &#123;</div><div class="line">     byte[] apkdata = data;</div><div class="line">     int ablen = apkdata.length;</div><div class="line">     byte[] dexlen = new byte[4];</div><div class="line">     System.arraycopy(apkdata, ablen - 4, dexlen, 0, 4);</div><div class="line">     ByteArrayInputStream bais = new ByteArrayInputStream(dexlen);</div><div class="line">     DataInputStream in = new DataInputStream(bais);</div><div class="line">     int readInt = in.readInt();</div><div class="line">     System.out.println(Integer.toHexString(readInt));</div><div class="line">     byte[] newdex = new byte[readInt];</div><div class="line">     System.arraycopy(apkdata, ablen - 4 - readInt, newdex, 0, readInt);</div><div class="line">     newdex = decrypt(newdex);</div><div class="line">     File file = new File(apkFileName);</div><div class="line">     try &#123;</div><div class="line">         FileOutputStream localFileOutputStream = new FileOutputStream(file);</div><div class="line">         localFileOutputStream.write(newdex);</div><div class="line">         localFileOutputStream.close();</div><div class="line"></div><div class="line">     &#125; catch (IOException localIOException) &#123;</div><div class="line">         throw new RuntimeException(localIOException);</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> //从壳应用安装的apk中获取其classes.dex文件</div><div class="line"> private byte[] readDexFileFromApk() throws IOException &#123;</div><div class="line">     ByteArrayOutputStream dexByteArrayOutputStream = new ByteArrayOutputStream();</div><div class="line">     ZipInputStream localZipInputStream = new ZipInputStream(</div><div class="line">             new BufferedInputStream(new FileInputStream(</div><div class="line">                     this.getApplicationInfo().sourceDir)));</div><div class="line">     while (true) &#123;</div><div class="line">         ZipEntry localZipEntry = localZipInputStream.getNextEntry();</div><div class="line">         if (localZipEntry == null) &#123;</div><div class="line">             localZipInputStream.close();</div><div class="line">             break;</div><div class="line">         &#125;</div><div class="line">         if (localZipEntry.getName().equals(&quot;classes.dex&quot;)) &#123;</div><div class="line">             byte[] arrayOfByte = new byte[1024];</div><div class="line">             while (true) &#123;</div><div class="line">                 int i = localZipInputStream.read(arrayOfByte);</div><div class="line">                 if (i == -1)</div><div class="line">                     break;</div><div class="line">                 dexByteArrayOutputStream.write(arrayOfByte, 0, i);</div><div class="line">             &#125;</div><div class="line">         &#125;</div><div class="line">         localZipInputStream.closeEntry();</div><div class="line">     &#125;</div><div class="line">     localZipInputStream.close();</div><div class="line">     return dexByteArrayOutputStream.toByteArray();</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>加固java脚本：将源应用apk文件二进制流写入壳应用classes.dex末尾，并修改dex文件的检验码、签名、文件大小</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">File apkFile = new File(sourceApkPath);</div><div class="line">File shellDexFile = new File(shellDexPath);</div><div class="line">...</div><div class="line">byte[] apkByteArray = encrypt(readFileBytes(apkFile));</div><div class="line">byte[] shellDexArray = readFileBytes(shellDexFile);</div><div class="line">int apkByteArrayLen = apkByteArray.length;</div><div class="line">int shellDexLen = shellDexArray.length;</div><div class="line">int totalLen = apkByteArrayLen + shellDexLen + 4;</div><div class="line">byte[] newDex = new byte[totalLen];</div><div class="line">// 添加壳应用数据</div><div class="line">System.arraycopy(shellDexArray, 0, newDex, 0, shellDexLen);</div><div class="line">// 添加源应用数据</div><div class="line">System.arraycopy(apkByteArray, 0, newDex, shellDexLen, apkByteArrayLen);</div><div class="line">// 添加源应用数据长度</div><div class="line">System.arraycopy(intToByte(apkByteArrayLen), 0, newDex, totalLen - 4, 4);</div><div class="line">// 修改DEX file size文件头</div><div class="line">fixFileSizeHeader(newDex);</div><div class="line">// 修改DEX SHA1 文件头</div><div class="line">fixSHA1Header(newDex);</div><div class="line">// 修改DEX CheckSum文件头</div><div class="line">fixCheckSumHeader(newDex);</div><div class="line">// 把内容写到 newDexFile</div><div class="line">File file = new File(newDexFile);</div><div class="line">if (!file.exists()) &#123;</div><div class="line">  file.createNewFile();</div><div class="line">&#125;</div><div class="line">FileOutputStream localFileOutputStream = new FileOutputStream(newDexFile);</div><div class="line">localFileOutputStream.write(newDex);</div><div class="line">localFileOutputStream.flush();</div><div class="line">localFileOutputStream.close();</div></pre></td></tr></table></figure>
+<p>手动加固步骤(参考此步骤就能对app进行简单加固，实际上这就是最早期的加固操作原理)：</p>
+<ol>
+<li>解压壳应用和源应用apk文件</li>
+<li>将源应用中的res、resources.arsc、assets、AndroidManifest.xml文件拷贝替换到壳应用中</li>
+<li>将AndroidManifest.xml中application节点的属性android:name修改为壳应用中<code>Application</code>类的类路径</li>
+<li>将源应用apk文件的二进制字节流加密后，写入到壳应用的classes.dex末尾</li>
+<li>将壳应用目录压缩为zip包，重命名为<code>unsign.apk</code></li>
+<li>签名<code>jarsigner -verbose -keystore minych.jks -storepass 123456 -signedjar signed.apk unsign.apk minych</code></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/26/Vue无埋点数据采集/" rel="next" title="Vue无埋点数据采集">
+                <i class="fa fa-chevron-left"></i> Vue无埋点数据采集
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="minyangcheng" />
+          <p class="site-author-name" itemprop="name">minyangcheng</p>
+          <p class="site-description motion-element" itemprop="description">生活其实是一种状态，好坏全凭的是前期的准备和现场发挥！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minyangcheng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://lymuxh.github.io" title="穆小灰灰" target="_blank">穆小灰灰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://zyfzyfhaha.github.io" title="峰哥" target="_blank">峰哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#破解一个app"><span class="nav-number">1.</span> <span class="nav-text">破解一个app</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤一：脱壳"><span class="nav-number">1.1.</span> <span class="nav-text">步骤一：脱壳</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#脱壳方法一"><span class="nav-number">1.1.1.</span> <span class="nav-text">脱壳方法一</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#脱壳方法二"><span class="nav-number">1.1.2.</span> <span class="nav-text">脱壳方法二</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤二：从dex文件和apk文件中获取app代码和资源"><span class="nav-number">1.2.</span> <span class="nav-text">步骤二：从dex文件和apk文件中获取app代码和资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤三：动态分析"><span class="nav-number">1.3.</span> <span class="nav-text">步骤三：动态分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤四：hook掉关键的方法"><span class="nav-number">1.4.</span> <span class="nav-text">步骤四：hook掉关键的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解app加固"><span class="nav-number">2.</span> <span class="nav-text">了解app加固</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现一个简单加固"><span class="nav-number">3.</span> <span class="nav-text">实现一个简单加固</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前置知识"><span class="nav-number">3.1.</span> <span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路"><span class="nav-number">3.2.</span> <span class="nav-text">实现思路</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">minyangcheng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
